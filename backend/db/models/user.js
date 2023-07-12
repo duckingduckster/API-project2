@@ -12,11 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       firstname: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [4, 30]}
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [4, 30]}
       },
       username: {
         type: DataTypes.STRING,
