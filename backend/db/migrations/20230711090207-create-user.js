@@ -14,15 +14,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
+      firstName: {
+        type: Sequelize.STRING(31),
+        allowNull: false
       },
-      lastname: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
+      lastName: {
+        type: Sequelize.STRING(31),
+        allowNull: false
       },
       username: {
         type: Sequelize.STRING(30),
