@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Spot.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
+    // id: {
+    //   allowNull: false,
+    //   autoIncrement: true,
+    //   primaryKey: true,
+    //   type: DataTypes.INTEGER
+    // },
     ownerId: {
       type: DataTypes.INTEGER
     },
@@ -63,7 +63,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    DataTypes,
     modelName: 'Spot',
   });
   return Spot;
