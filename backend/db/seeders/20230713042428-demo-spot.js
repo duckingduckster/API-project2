@@ -10,11 +10,11 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId:123,
-        address:'eeqewq',
-        city:'dffad',
-        state:'fsds',
-        country:'dfsfa',
+        ownerId:12345,
+        address:'1245 S blvd',
+        city:'Lakewood',
+        state:'CO',
+        country:'USA',
         lat:21313,
         lng:21414,
         name:'sdada',
@@ -22,10 +22,28 @@ module.exports = {
         price:23134
       },
       {
-
+        ownerId:123,
+        address:'eeqewq',
+        city:'dffad',
+        state:'fsds',
+        country:'dfsfa',
+        lat:21313,
+        lng:21414,
+        name:'sdada2',
+        description:'qwewq',
+        price:23134
       },
       {
-
+        ownerId:123,
+        address:'eeqewq',
+        city:'dffad',
+        state:'fsds',
+        country:'dfsfa',
+        lat:21313,
+        lng:21414,
+        name:'sdada3',
+        description:'qwewq',
+        price:23134
       }
     ], {});
   },
@@ -34,7 +52,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      name : { [Op.in]: ['sdada', 'sdada2', 'sdada3'] }
     }, {});
   }
 };
