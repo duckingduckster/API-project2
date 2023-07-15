@@ -16,7 +16,10 @@ module.exports = {
         }
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'Users'
+        }
       },
       startDate: {
         type: Sequelize.INTEGER,
