@@ -11,31 +11,23 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateSignup = [
-    check('email')
+  check('email')
       .exists({ checkFalsy: true })
-      .isEmail()
       .withMessage('Please provide a valid email.'),
-    check('username')
+  check('username')
       .exists({ checkFalsy: true })
-      .isLength({ min: 4 })
       .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-      .not()
-      .isEmail()
-      .withMessage('Username cannot be an email.'),
-    check('password')
-      .exists({ checkFalsy: true })
-      .isLength({ min: 6 })
-      .withMessage('Password must be 6 characters or more.'),
-    check('firstName')
+  check('firstName')
       .exists({ checkFalsy: true })
       .withMessage('Please provide a firstName'),
-    check('lastName')
+  check('lastName')
       .exists({ checkFalsy: true })
       .withMessage('Please provide a lastName'),
-
-    handleValidationErrors
-  ];
+  check('password')
+      .exists({ checkFalsy: true })
+      .withMessage('Password must be 6 characters or more.'),
+  handleValidationErrors
+];
 
   router.post(
     '',

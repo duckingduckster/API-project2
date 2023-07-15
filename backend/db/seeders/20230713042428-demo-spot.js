@@ -22,28 +22,10 @@ module.exports = {
         price:23134
       },
       {
-        ownerId:123,
-        address:'eeqewq',
-        city:'dffad',
-        state:'fsds',
-        country:'dfsfa',
-        lat:21313,
-        lng:21414,
-        name:'sdada2',
-        description:'qwewq',
-        price:23134
+
       },
       {
-        ownerId:123,
-        address:'eeqewq',
-        city:'dffad',
-        state:'fsds',
-        country:'dfsfa',
-        lat:21313,
-        lng:21414,
-        name:'sdada3',
-        description:'qwewq',
-        price:23134
+        
       }
     ], {});
   },
