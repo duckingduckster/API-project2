@@ -10,7 +10,7 @@ module.exports = {
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId:12345,
+        ownerId:1,
         address:'1245 S blvd',
         city:'Lakewood',
         state:'CO',
@@ -19,13 +19,32 @@ module.exports = {
         lng:21414,
         name:'sdada',
         description:'qwewq',
-        price:23134
+        price:2313
       },
       {
+        ownerId:2,
+        address:'1245 N blvd',
+        city:'Lakewood',
+        state:'CO',
+        country:'USA',
+        lat:21313,
+        lng:21414,
+        name:'sdada',
+        description:'qwewq',
+        price:3134
 
       },
       {
-        
+        ownerId:3,
+        address:'1245 E blvd',
+        city:'Lakewood',
+        state:'CO',
+        country:'USA',
+        lat:21313,
+        lng:21414,
+        name:'sdada',
+        description:'qwewq',
+        price:2334
       }
     ], {});
   },
