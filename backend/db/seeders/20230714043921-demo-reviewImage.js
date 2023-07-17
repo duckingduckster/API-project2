@@ -11,14 +11,19 @@ module.exports = {
     options.tableName = 'ReviewImages';
     return queryInterface.bulkInsert(options, [
       {
+        id: 1,
         reviewId: 1,
-        url:
+        url:'https://staticg.sportskeeda.com/editor/2022/08/743b9-16599916314293-1920.jpg'
       },
       {
-
+        id: 1,
+        reviewId: 2,
+        url: 'https://static.wikia.nocookie.net/onepiece/images/e/e1/Kinoko_Island_Infobox.png/revision/latest?cb=20151222012414'
       },
       {
-
+        id: 1,
+        reviewId: 3,
+        url: 'https://static.wikia.nocookie.net/onepiece/images/4/43/Lost_Island_Infobox.png/revision/latest?cb=20180815043010'
       }
     ], {});
   },

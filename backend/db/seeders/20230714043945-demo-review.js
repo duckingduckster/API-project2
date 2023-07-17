@@ -18,10 +18,18 @@ module.exports = {
         stars:
       },
       {
-
+        id:
+        spotId:
+        userId:
+        review:
+        stars:
       },
       {
-
+        id:
+        spotId:
+        userId:
+        review:
+        stars:
       }
     ], {});
   },

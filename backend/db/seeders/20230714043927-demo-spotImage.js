@@ -11,15 +11,19 @@ module.exports = {
     options.tableName = 'SpotImages';
     return queryInterface.bulkInsert(options, [
       {
-      spotId:
-      url:
-      preview:
+      spotId: 1,
+      url: '',
+      preview: true
       },
       {
-
+        spotId: 2,
+        url: '',
+        preview: true
       },
       {
-
+        spotId: 3,
+        url: '',
+        preview: true
       }
     ], {});
   },
