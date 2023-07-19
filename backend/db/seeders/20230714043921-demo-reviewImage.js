@@ -1,5 +1,4 @@
 'use strict';
-const bcrypt = require("bcryptjs");
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -11,28 +10,25 @@ module.exports = {
     options.tableName = 'ReviewImages';
     return queryInterface.bulkInsert(options, [
       {
-        id: 1,
         reviewId: 1,
-        url:'https://staticg.sportskeeda.com/editor/2022/08/743b9-16599916314293-1920.jpg'
+        url:'.jpg'
       },
       {
-        id: 1,
         reviewId: 2,
-        url: 'https://static.wikia.nocookie.net/onepiece/images/e/e1/Kinoko_Island_Infobox.png/revision/latest?cb=20151222012414'
+        url: '.jpg2'
       },
       {
-        id: 1,
         reviewId: 3,
-        url: 'https://static.wikia.nocookie.net/onepiece/images/4/43/Lost_Island_Infobox.png/revision/latest?cb=20180815043010'
+        url: '.jpg3'
       }
     ], {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Users';
+    options.tableName = 'ReviewImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      url: { [Op.in]: ['.jpg', '.jpg2', '.jpg3'] }
     }, {});
   }
 };

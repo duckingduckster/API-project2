@@ -11,34 +11,31 @@ module.exports = {
     options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
-        id: 1,
         spotId:1,
         userId:1,
-        review:'',
+        review:'nice',
+        stars:5
+      },
+      {
+        spotId:1,
+        userId:1,
+        review:'okay',
         stars:4
       },
       {
-        id: 2,
         spotId:1,
         userId:1,
-        review:'',
-        stars:4
-      },
-      {
-        id: 3,
-        spotId:1,
-        userId:1,
-        review:'',
+        review:'aight',
         stars:3
       }
     ], {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'Users';
+    options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      stars: { [Op.in]: [4, 3, 5] }
     }, {});
   }
 };

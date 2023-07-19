@@ -29,7 +29,7 @@ module.exports = {
         country:'USA',
         lat:21313,
         lng:21414,
-        name:'sdada',
+        name:'sdada2',
         description:'qwewq',
         price:3134
 
@@ -42,7 +42,7 @@ module.exports = {
         country:'USA',
         lat:21313,
         lng:21414,
-        name:'sdada',
+        name:'sdada3',
         description:'qwewq',
         price:2334
       }
@@ -57,4 +57,3 @@ module.exports = {
     }, {});
   }
 };
-cd
