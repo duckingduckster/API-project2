@@ -4,6 +4,7 @@ const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../d
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const sequelize = require( 'sequelize')
 
+// get reviews through spotId
 router.get('/:spotId/reviews', async (req, res, next)=>{
     let spotId = req.params.spotId
 
