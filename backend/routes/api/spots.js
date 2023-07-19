@@ -3,8 +3,12 @@ const router = express.Router()
 const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../db/models')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const sequelize = require( 'sequelize')
+const { handleValidationErrors } = require('../../utils/validation');
 
+const validateSpot = [
+    check('address')
 
+]
 // get reviews through spotId
 router.get('/:spotId/reviews', async (req, res, next)=>{
     let spotId = req.params.spotId
