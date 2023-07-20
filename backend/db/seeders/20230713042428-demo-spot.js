@@ -19,7 +19,8 @@ module.exports = {
         lng:21414,
         name:'sdada',
         description:'qwewq',
-        price:2313
+        price:2313,
+        previewImage: '.jpeg1'
       },
       {
         ownerId:2,
@@ -31,7 +32,8 @@ module.exports = {
         lng:21414,
         name:'sdada2',
         description:'qwewq',
-        price:3134
+        price:3134,
+        previewImage: '.jpeg2'
 
       },
       {
@@ -44,7 +46,8 @@ module.exports = {
         lng:21414,
         name:'sdada3',
         description:'qwewq',
-        price:2334
+        price:2334,
+        previewImage: '.jpeg3'
       }
     ], {});
   },

@@ -73,6 +73,9 @@ module.exports = {
       avgRating: {
         type: Sequelize.DECIMAL,
         allowNull: true
+      },
+      previewImage: {
+        type: Sequelize.STRING
       }
     },options);
   },
