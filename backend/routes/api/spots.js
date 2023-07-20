@@ -50,7 +50,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
     const current = req.user.id
     // console.log(current)
     const spots = await Spot.findAll({
-        where:{ownerId: current},
+        where: {ownerId: current},
         include:[
         {   model: Review,
             attributes: []
@@ -59,13 +59,38 @@ router.get('/current', requireAuth, async(req, res, next)=>{
     attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
                 'description', 'price', 'createdAt', 'updatedAt',
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating'], 'previewImage'],
-    group:['Spot.id'],
+    group: ['Spot.id'],
     })
-    let spotList = []
-    spots.forEach(spot =>{
-        spotList.push(spot.toJSON())
+    // results = {}
+    // results.Spots = spots
+    return res.status(200).json({"Spots":spots})
+})
+
+// get details of spot from id
+router.get('/:spotId', async(req, res, next)=>{
+    const spotId = req.params.spotId
+
+    const spots = await Spot.findAll({
+        where: {id: spotId},
+        include:[
+            {   model: Review,
+                attributes: []
+            },
+            {   model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            {   model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ],
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
+                'description', 'price', 'createdAt', 'updatedAt',
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
+        group: ['Spot.id']
     })
-    return res.status(200).json(spotList)
+    if(spotId) return res.status(200).json(spots)
+    else return res.status(404).json({message:"Spot couldn't be found"})
 })
 
 // get reviews through spotId
@@ -73,7 +98,7 @@ router.get('/:spotId/reviews', async (req, res, next)=>{
     let spotId = req.params.spotId
 
     const reviews = await Review.findAll({
-        where : {spotId: spotId},
+        where:{spotId: spotId},
         include:[{
             model : User,
             attributes: ['id', 'firstName', 'lastName']
@@ -90,6 +115,15 @@ router.get('/:spotId/reviews', async (req, res, next)=>{
 //delete spot through id
 router.delete(':/spotId', requireAuth, async (req, res, next)=>{
     const user = req.user
+    const spotId = req.params.spotId
+    const currentSpot = await Spot.findbyPk(spotId)
+
+    if (currentSpot){
+        if (user.id === currentSpot.ownerId){
+            await currentSpot.destroy()
+            return res.status(200).json({message:'Successfully deleted'})
+        }else return res.status(403).json({message: 'Forbidden'})
+    } else return res.status(404).json({message:"Spot couldn't be found"})
 })
 
 
