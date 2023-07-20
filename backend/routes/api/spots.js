@@ -93,6 +93,21 @@ router.get('/:spotId', async(req, res, next)=>{
     else return res.status(404).json({message:"Spot couldn't be found"})
 })
 
+//create a spot
+router.post('', requireAuth, validateSpot, async(req, res, next)=>{
+    const id = req.params.spotId
+    const { address, city, state, country, lat, lng, name, description, price} = req.body
+    const ownerId = req.user.id
+
+
+
+    const newSpot = await Spot.create ({id, ownerId, address, city, state, country, lat, lng, name, description, price})
+
+    return res.status(201).json(newSpot)
+
+})
+
+
 // get reviews through spotId
 router.get('/:spotId/reviews', async (req, res, next)=>{
     let spotId = req.params.spotId
