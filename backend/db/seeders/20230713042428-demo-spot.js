@@ -15,11 +15,11 @@ module.exports = {
         city:'Lakewood',
         state:'CO',
         country:'USA',
-        lat:21313,
-        lng:21414,
+        lat:1,
+        lng:2,
         name:'sdada',
         description:'qwewq',
-        price:2313,
+        price:123,
         previewImage: '.jpeg1'
       },
       {
@@ -28,11 +28,11 @@ module.exports = {
         city:'Lakewood',
         state:'CO',
         country:'USA',
-        lat:21313,
-        lng:21414,
+        lat:3,
+        lng:4,
         name:'sdada2',
         description:'qwewq',
-        price:3134,
+        price:123,
         previewImage: '.jpeg2'
 
       },
@@ -42,11 +42,11 @@ module.exports = {
         city:'Lakewood',
         state:'CO',
         country:'USA',
-        lat:21313,
-        lng:21414,
+        lat:5,
+        lng:6,
         name:'sdada3',
         description:'qwewq',
-        price:2334,
+        price:123,
         previewImage: '.jpeg3'
       }
     ], {});
@@ -56,7 +56,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name : { [Op.in]: ['sdada', 'sdada2', 'sdada3'] }
+      price : { [Op.in]: [123] }
     }, {});
   }
 };
