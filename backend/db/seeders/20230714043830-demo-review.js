@@ -18,13 +18,13 @@ module.exports = {
       },
       {
         spotId:2,
-        userId:1,
+        userId:2,
         review:'okay',
         stars:4
       },
       {
         spotId:3,
-        userId:1,
+        userId:3,
         review:'aight',
         stars:3
       }
