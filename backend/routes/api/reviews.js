@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router();
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Review } = require('../../db/models')
-const { ReviewImage } = require('../../db/models')
+const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../db/models')
+// const { ReviewImage } = require('../../db/models')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const spot = require('../../db/models/spot');
 
 const validateReview = [
     check('review')
@@ -19,8 +20,32 @@ const validateReview = [
 
 //get all reviews of current user
 router.get('/current', requireAuth, async(req, res, next)=>{
-    
+    const current = req.user.id
+
+    const reviews = await Review.findAll({
+        where: {userId : current},
+        include: [
+            {
+                model: Spot,
+                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
+                'price', 'previewImage']
+            },
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ],
+        // attributes: ['id', 'userId', 'spotId', 'review', 'stars'],
+        // group: ['Review.id'],
+    })
+    return res.json({"Reviews":reviews})
 })
+
+
 
 
 module.exports = router;

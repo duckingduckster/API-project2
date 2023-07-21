@@ -14,15 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       ),
       Spot.hasOne(
         models.Booking,
-        { foreignKey: 'spotId', onDelete: 'CASCADE'}
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks:true}
       ),
       Spot.hasMany(
         models.SpotImage,
-        { foreignKey: 'spotId', onDelete: 'CASCADE'}
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks:true}
       ),
       Spot.hasMany(
         models.Review,
-        { foreignKey: 'spotId', onDelete: 'CASCADE'}
+        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks:true}
       )
 
     }
@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     address:{
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     city:{
       type: DataTypes.STRING,
@@ -75,11 +76,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     avgRating: {
-      type: DataTypes.DECIMAL,
-      allowNull: true
-    },
-    previewImage: {
-      type: DataTypes.STRING
+      type: DataTypes.DECIMAL
     }
   }, {
     sequelize,

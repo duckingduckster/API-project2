@@ -19,12 +19,13 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-          onDelete: 'CASCADE'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       address:{
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       city:{
         type: Sequelize.STRING,
@@ -71,11 +72,7 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       avgRating: {
-        type: Sequelize.DECIMAL,
-        allowNull: true
-      },
-      previewImage: {
-        type: Sequelize.STRING
+        type: Sequelize.DECIMAL
       }
     },options);
   },

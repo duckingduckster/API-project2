@@ -12,17 +12,17 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
       spotId: 1,
-      url: '',
+      url: 'png',
       preview: true
       },
       {
         spotId: 2,
-        url: '',
+        url: 'png2',
         preview: true
       },
       {
         spotId: 3,
-        url: '',
+        url: 'png3',
         preview: true
       }
     ], {});

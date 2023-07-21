@@ -17,13 +17,13 @@ module.exports = {
         stars:5
       },
       {
-        spotId:1,
+        spotId:2,
         userId:1,
         review:'okay',
         stars:4
       },
       {
-        spotId:1,
+        spotId:3,
         userId:1,
         review:'aight',
         stars:3
