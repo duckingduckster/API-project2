@@ -186,7 +186,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
 router.get('/:spotId', async(req, res, next)=>{
     const spotId = req.params.spotId
 
-    const spots = await Spot.findAll({
+    const spots = await Spot.findOne({
         where: {id: spotId},
         include:[
             {   model: Review,
@@ -203,7 +203,7 @@ router.get('/:spotId', async(req, res, next)=>{
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
                 'description', 'price', 'createdAt', 'updatedAt',
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
-        group: ['Spot.id']
+        group: ['Spot.id', 'Reviews.id', 'SpotImages.id', 'Owner.id']
     })
     if(spotId) return res.status(200).json(spots)
 
