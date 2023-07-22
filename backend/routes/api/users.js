@@ -28,42 +28,67 @@ const validateSignup = [
   handleValidationErrors
 ];
 
+  // router.post(
+  //   '',
+  //   validateSignup,
+  //   async (req, res) => {
+  //     const { email, firstName, lastName, password, username } = req.body;
+  //     const hashedPassword = bcrypt.hashSync(password);
+  //     const user = await User.create({ email, username, firstName, lastName, hashedPassword });
+
+      // const emailCheck = await User.findOne({ where : { email }})
+
+      // const userNameCheck = await User.findOne({ where: { username }})
+
+      // if(emailCheck){
+      //   const err = new Error("User already exists")
+      //   return res.json({
+      //     message: err.message,
+      //     statusCode: 500,
+      //     errors: {email: "User with that email already exists"}
+      //   })
+      // }
+
+      // if(userNameCheck){
+      //   const err = new Error("User already exists")
+      //   return res.json({
+      //     message: err.message,
+      //     statusCode: 500,
+      //     errors: {username: "User with that username already exists"}
+      //   })
+      // }
+
+  //     const safeUser = {
+  //       id: user.id,
+  //       firstName: user.firstName,
+  //       lastName: user.lastName,
+  //       email: user.email,
+  //       username: user.username,
+  //     };
+
+  //     await setTokenCookie(res, safeUser);
+
+  //     return res.json({
+  //       user: safeUser
+  //     });
+  //   }
+  // );
+
   router.post(
-    '',
+    '/',
     validateSignup,
     async (req, res) => {
-      const { email, firstName, lastName, password, username } = req.body;
+      const { email, password, username, firstName, lastName } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      const user = await User.create({ email, username, firstName, lastName, hashedPassword });
+      const user = await User.create({ email, username, firstName, lastName,hashedPassword });
 
-      const emailCheck = await User.findOne({ where : { email: email }})
-
-      const userNameCheck = await User.findOne({ where: { username: username}})
-
-      if(emailCheck){
-        const err = new Error("User already exists")
-        return res.json({
-          message: err.message,
-          statusCode: 500,
-          errors: {email: "User with that email already exists"}
-        })
-      }
-
-      if(userNameCheck){
-        const err = new Error("User already exists")
-        return res.json({
-          message: err.message,
-          statusCode: 500,
-          errors: {username: "User with that username already exists"}
-        })
-      }
-
+      
       const safeUser = {
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
         email: user.email,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName
       };
 
       await setTokenCookie(res, safeUser);
