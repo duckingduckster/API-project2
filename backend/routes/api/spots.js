@@ -224,10 +224,11 @@ router.get('/:spotId', async(req, res, next)=>{
         ],
         attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
                 'description', 'price', 'createdAt', 'updatedAt',
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
+                [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
+                [sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews']],
         group: ['Spot.id']
     })
-    
+
     if(spots)return res.status(200).json(spots)
 
     else return res.status(404).json({message:"Spot couldn't be found"})
@@ -350,6 +351,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
             spotId: parseInt(spotId)
         }
     })
+    if(userId === spot.ownerId )return res.status(403).json({message:'Cannot review your own spot'})
     if(spot){
         if(!userReview){
             const newReview = await Review.create({ userId, spotId, review, stars})
@@ -421,7 +423,7 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next)=>{
         bookEndDate = new Date(booking.endDate)
     }
 
-    if((bookingStartDate <= bookEndDate) && (bookingStartDate >= bookStartDate) && (bookingEndDate <= bookedEndDate) && (bookingEndDate >= bookStartDate)) {
+    if((bookingStartDate <= bookEndDate) && (bookingStartDate >= bookStartDate) && (bookingEndDate <= bookEndDate) && (bookingEndDate >= bookStartDate)) {
         return res.status(403).json({
             message: "Sorry, this spot is already booked for the specified dates",
             errors: {

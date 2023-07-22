@@ -12,18 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       SpotImage.belongsTo(
         models.Spot,
-        {foreignKey: 'spotId'}
+        {foreignKey: 'spotId', onDelete: 'CASCADE'}
       )
     }
   }
   SpotImage.init({
     spotId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.INTEGER
     },
     url: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     preview: {
       type: DataTypes.BOOLEAN,
