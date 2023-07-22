@@ -36,12 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     startDate: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       unique: true,
       allowNull: false
     },
     endDate: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       unique: true,
       allowNull: false
     },

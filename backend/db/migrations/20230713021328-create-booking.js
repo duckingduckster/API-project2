@@ -29,12 +29,12 @@ module.exports = {
         }
       },
       startDate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         unique: true,
         allowNull: false
       },
       endDate: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         unique: true,
         allowNull: false
       },

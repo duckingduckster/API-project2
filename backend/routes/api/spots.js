@@ -6,6 +6,7 @@ const sequelize = require( 'sequelize')
 const { handleValidationErrors } = require('../../utils/validation');
 // const spot = require('../../db/models/spot');
 const { check } = require('express-validator');
+const { Op } = require('sequelize')
 
 
 
@@ -300,9 +301,49 @@ router.post('/:spotId/bookings', requireAuth, async(req, res, next)=>{
     const spotId = req.params.spotId
     const userId = req.user.id
     const { startDate, endDate }= req.body
-    
+
     const spot = await Spot.findByPk(spotId)
 
+    if(!spot)return res.status(404).json({message: "Spot couldn't be found"})
+
+    if(spot.ownerId === userId)return res.status(403).json({message: "Can't book your own spot"})
+
+
+    const checkingBookings = await Booking.findAll({
+        where: {
+            spotId,
+            [Op.or]: [
+                {
+                    startDate: { [Op.lte]: startDate },
+                    endDate: { [Op.gte]: startDate },
+                },
+                {
+                    startDate: { [Op.lte]: endDate },
+                    endDate: { [Op.gte]: endDate },
+                },
+                {
+                    startDate: { [Op.gte]: startDate },
+                    endDate: { [Op.lte]: endDate },
+                },
+            ]
+        }
+    })
+    if (checkingBookings.length) {
+        return res.status(403).json({
+            "message": "Sorry, this spot is already booked for the specified dates",
+            "errors": {
+                "startDate": "Start date conflicts with an existing booking",
+                "endDate": "End date conflicts with an existing booking"
+            }
+        })
+    }
+    const newBooking = await Booking.create({
+        spotId: parseInt(spotId),
+        userId,
+        startDate,
+        endDate
+    })
+    if (newBooking)return res.status(200).json(newBooking)
 
 })
 
