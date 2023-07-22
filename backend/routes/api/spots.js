@@ -52,15 +52,84 @@ const validateReview = [
         handleValidationErrors
 ]
 
+const validateQuery = [
+    check('page')
+        .optional(true)
+        .isFloat({min: 1})
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .optional(true)
+        .isFloat({min: 1})
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .optional(true)
+        .isFloat({max: 90})
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .optional(true)
+        .isFloat({min: -90})
+        .withMessage("Minimum latitude is invalid"),
+    check('minLng')
+        .optional(true)
+        .isFloat({min: -180})
+        .withMessage("Minimum longitude is invalid"),
+    check('maxLng')
+        .optional(true)
+        .isFloat({max: 180})
+        .withMessage("Maximum longitude is invalid"),
+    check('minPrice')
+        .optional(true)
+        .isFloat({min: 0})
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional(true)
+        .isFloat({min: 0})
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+
+]
+
 // get all spots
 router.get('/', async (req, res, next) =>{
+    let { page = 1, size = 20, maxLat, minLat, minLng, maxLng, minPrice = 0, maxPrice = 0 } = req.query
+
+    page = parseInt(page)
+    size = parseInt(size)
+    let pag = {}
+
+    if(page !== 0 && size !== 0) {
+        pag.limit = size
+        pag.offset = size * (page - 1)
+    }
+
+    const where = {};
+
+    if(maxLat) {
+        where.lat = { ...where.lat, [Op.lte]: maxLat}}
+
+    if(minLat) {
+        where.lat = { [Op.gte]: minLat}}
+
+    if(minLng) {
+        where.lng = { [Op.gte]: minLng}}
+
+    if(maxLng) {
+        where.lng = { ...where.lng, [Op.lte]: maxLng}}
+
+    if (minPrice) {
+        where.price = { [Op.gte]: minPrice}}
+
+    if(maxPrice) {
+        where.price = { ...where.price, [Op.lte]: maxPrice}}
+
     const spots = await Spot.findAll({
         include:[
         {   model: Review,
             attributes: []
         }
     ],
-
+    where,
+    ...pag
     })
     for (const spot of spots) {
         const previewImage = await SpotImage.findOne({
