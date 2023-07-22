@@ -167,18 +167,40 @@ router.get('/current', requireAuth, async(req, res, next)=>{
     const current = req.user.id
 
     const spots = await Spot.findAll({
-        where: {ownerId: current},
         include:[
         {   model: Review,
             attributes: []
         }
     ],
-    attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
-                'description', 'price', 'createdAt', 'updatedAt',
-                [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
-    group: ['Spot.id'],
-    })
+})
+for (const spot of spots) {
+    const previewImage = await SpotImage.findOne({
+        attributes: ['url'],
+        where: { spotId: spot.id, preview: true },
+    });
+    if (previewImage) {
+        spot.dataValues.previewImage = previewImage.dataValues.url;
+    }
+    if (previewImage) {
+        spot.dataValues.previewImage = previewImage.dataValues.url;
+    }
+    const spotRating = await Spot.findByPk(spot.id, {
 
+            include:[
+                {
+                        model: Review,
+                        attributes: []
+                    },
+                ],
+                attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
+                            'description', 'price', 'createdAt', 'updatedAt',
+                            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
+                group: ['Spot.id'],
+            })
+            const avgRating = spotRating.dataValues.avgRating;
+
+            if(spotRating) spot.dataValues.avgRating = avgRating
+        }
     return res.status(200).json({"Spots":spots})
 })
 
@@ -186,7 +208,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
 router.get('/:spotId', async(req, res, next)=>{
     const spotId = req.params.spotId
 
-    const spots = await Spot.findAll({
+    const spots = await Spot.findOne({
         where: {id: spotId},
         include:[
             {   model: Review,
@@ -205,9 +227,11 @@ router.get('/:spotId', async(req, res, next)=>{
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
         group: ['Spot.id']
     })
-    if(spotId) return res.status(200).json(spots)
+    
+    if(spots)return res.status(200).json(spots)
 
     else return res.status(404).json({message:"Spot couldn't be found"})
+
 })
 
 //create a spot
@@ -217,7 +241,7 @@ router.post('/', requireAuth, validateSpot, async(req, res, next)=>{
 
     const newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price})
 
-    
+
     return res.status(201).json(newSpot)
 
 })
