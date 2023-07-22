@@ -2,10 +2,9 @@ const express = require('express')
 const router = express.Router();
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../db/models')
-// const { ReviewImage } = require('../../db/models')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-// const spot = require('../../db/models/spot');
+
 
 const validateReview = [
     check('review')
@@ -42,7 +41,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
         // attributes: ['id', 'userId', 'spotId', 'review', 'stars'],
         // group: ['Review.id'],
     })
-    return res.json({"Reviews":reviews})
+    return res.json({Reviews:reviews})
 })
 
 //add an image to review base on review id
