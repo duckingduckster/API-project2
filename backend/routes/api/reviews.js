@@ -5,7 +5,7 @@ const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../d
 // const { ReviewImage } = require('../../db/models')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const spot = require('../../db/models/spot');
+// const spot = require('../../db/models/spot');
 
 const validateReview = [
     check('review')
