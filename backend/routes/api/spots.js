@@ -226,7 +226,7 @@ router.get('/:spotId', async(req, res, next)=>{
                 'description', 'price', 'createdAt', 'updatedAt',
                 [sequelize.fn('AVG', sequelize.col('stars')), 'avgStarRating'],
                 [sequelize.fn('COUNT', sequelize.col('Reviews.id')), 'numReviews']],
-        group: ['Spot.id']
+        group: ['Spot.id', 'Reviews.id', 'SpotImages.id', 'Owner.id']
     })
 
     if(spots)return res.status(200).json(spots)
