@@ -38,4 +38,9 @@ router.get('/current', requireAuth, async(req, res, next)=>{
     return res.status(200).json({Bookings: currBookings})
 })
 
+//edit a booking
+router.put('/:bookingId', requireAuth, async(req, res, next)=>{
+    
+})
+
 module.exports = router;
