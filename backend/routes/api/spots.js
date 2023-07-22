@@ -90,7 +90,7 @@ const validateQuery = [
 ]
 
 // get all spots
-router.get('/', async (req, res, next) =>{
+router.get('/', validateQuery, async (req, res, next) =>{
     let { page = 1, size = 20, maxLat, minLat, minLng, maxLng, minPrice = 0, maxPrice = 0 } = req.query
 
     page = parseInt(page)
