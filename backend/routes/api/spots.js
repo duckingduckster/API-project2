@@ -259,10 +259,12 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
 
     if (newSpot) {
 
+        delete newSpot.avgrating;
+        
         newSpot.lat = parseFloat(newSpot.lat)
         newSpot.lng = parseFloat(newSpot.lng)
         newSpot.price = parseFloat(newSpot.price)
-        return res.json(newSpot.toJSON({ exclude: ['avgRating'] }))
+        return res.json(newSpot)
     }
 
 })
