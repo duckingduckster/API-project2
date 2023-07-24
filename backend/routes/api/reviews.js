@@ -9,7 +9,9 @@ const { handleValidationErrors } = require('../../utils/validation');
 const validateReview = [
     check('review')
         .exists({ checkFalsy: true})
-        .withMessage("Review text is required"),
+        .withMessage("Review text is required")
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('stars')
         .exists({ checkFalsy: true})
         .isFloat({ min: 1, max: 5})

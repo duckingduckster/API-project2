@@ -13,16 +13,24 @@ const { Op } = require('sequelize')
 const validateSpot = [
     check('address')
         .exists({ checkFalsy: true })
-        .withMessage('Street address is required'),
+        .withMessage('Street address is required')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('city')
         .exists({ checkFalsy: true })
-        .withMessage('City is required'),
+        .withMessage('City is required')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('state')
         .exists({ checkFalsy: true })
-        .withMessage('State is required'),
+        .withMessage('State is required')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('country')
         .exists({ checkFalsy: true })
-        .withMessage('Country is required'),
+        .withMessage('Country is required')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
         check('lat')
         .isFloat({ min: -90, max: 90 })
         .withMessage('Latitude is not valid'),
@@ -31,10 +39,14 @@ const validateSpot = [
         .withMessage('Longitude is not valid'),
     check('name')
         .exists({ checkFalsy: true })
-        .withMessage('Name must be less than 50 characters'),
+        .withMessage('Name must be less than 50 characters')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('description')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .withMessage('Description is required')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('price')
         .exists({ checkFalsy: true })
         .withMessage('Price per day is required'),
@@ -44,7 +56,9 @@ const validateSpot = [
 const validateReview = [
     check('review')
         .exists({ checkFalsy: true})
-        .withMessage("Review text is required"),
+        .withMessage("Review text is required")
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
     check('stars')
         .exists({ checkFalsy: true})
         .isFloat({ min: 1, max: 5})
@@ -292,7 +306,7 @@ router.put('/:spotId', requireAuth, validateSpot, async(req, res, next)=>{
             const updatedSpot = await currentSpot.update({ address, city, state, country, lat, lng, name, description, price})
             return res.status(200).json(updatedSpot)
 
-        }else return res.status(403).json({message:"Forbiden"})
+        }else return res.status(403).json({message:"Forbbiden"})
 
     }else return res.status(404).json({message:"Spot couldn't be found"})
 })
@@ -359,9 +373,13 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
     if(userId === spot.ownerId )return res.status(403).json({message:'Cannot review your own spot'})
     if(spot){
         if(!userReview){
-            const newReview = await Review.create({ userId, spotId, review, stars})
-            return res.status(201).json(newReview)
+            let newReview = await Review.create({ userId, spotId, review, stars})
 
+            if (newReview) {
+                newReview = newReview.toJSON()
+                newReview.stars = parseFloat(newReview.stars)
+                return res.status(201).json(newReview)
+            }
         }else return res.status(500).json({message:"User already has a review for this spot"})
 
     }else return  res.status(404).json({message:"Spot couldn't be found"})
