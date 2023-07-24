@@ -258,7 +258,8 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
     let newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price})
 
     if (newSpot) {
-        newSpot = newSpot.toJSON()
+        
+        newSpot = newSpot.toJSON({ exclude: ['avgRating'] })
         newSpot.lat = parseFloat(newSpot.lat)
         newSpot.lng = parseFloat(newSpot.lng)
         newSpot.price = parseFloat(newSpot.price)
