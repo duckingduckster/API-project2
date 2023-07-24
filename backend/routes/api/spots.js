@@ -172,7 +172,12 @@ router.get('/', validateQuery, async (req, res, next) =>{
 
     let results = {}
     results.Spots = spots
-    return res.status(200).json({Spots:spots})
+    if(spots){
+        spots.lat = parseFloat(spots.lat)
+        spots.lng = parseFloat(spots.lng)
+        spots.price = parseFloat(spots.price)
+        spots.avgRating = parseFloat(spots.avgRating)
+        return res.status(200).json({Spots:spots})}
 })
 
 
@@ -216,7 +221,12 @@ for (const spot of spots) {
 
             if(spotRating) spot.dataValues.avgRating = avgRating
         }
-    return res.status(200).json({"Spots":spots})
+    if(spots){
+        spots.lat = parseFloat(spots.lat)
+        spots.lng = parseFloat(spots.lng)
+        spots.price = parseFloat(spots.price)
+        spots.avgRating = parseFloat(spots.avgRating)
+        return res.status(200).json({"Spots":spots})}
 })
 
 // get details of spot from id
@@ -244,7 +254,12 @@ router.get('/:spotId', async(req, res, next)=>{
         group: ['Spot.id', 'Reviews.id', 'SpotImages.id', 'Owner.id']
     })
 
-    if(spots)return res.status(200).json(spots)
+    if(spots){
+        spots.lat = parseFloat(spots.lat)
+        spots.lng = parseFloat(spots.lng)
+        spots.price = parseFloat(spots.price)
+        spots.avgRating = parseFloat(spots.avgRating)
+        return res.status(200).json(spots)}
 
     else return res.status(404).json({message:"Spot couldn't be found"})
 

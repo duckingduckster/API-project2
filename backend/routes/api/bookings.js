@@ -10,7 +10,6 @@ const spotimage = require('../../db/models/spotimage');
 //get all current user booking
 router.get('/current', requireAuth, async(req, res, next)=>{
     const userId = req.user.id
-    const spotId = req.params.spotId
 
     const currBookings = await Booking.findAll({
         where: { userId },
@@ -22,19 +21,19 @@ router.get('/current', requireAuth, async(req, res, next)=>{
         ]
     })
     for (const currBooking of currBookings){
-        const spot = currBooking.spot
+        const spot = currBooking.Spot
         const previewImage = await SpotImage.findOne({
             attributes: ['url'],
             where: {
-                spotId,
+                spotId: spot.id,
                 preview: true
             }
         })
         if (previewImage){
             spot.dataValues.previewImage = previewImage.url
         }
-    }
-    return res.status(200).json({Bookings: currBookings})
+}
+    return res.json({Bookings: currBookings})
 })
 
 //edit a booking
