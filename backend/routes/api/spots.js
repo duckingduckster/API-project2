@@ -273,7 +273,7 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
             price: parseFloat(newSpot.price),
             updatedAt: newSpot.updatedAt,
             createdAt: newSpot.createdAt
-        };
+        }
 
         return res.json(spotWithoutAvgRating);
     }
