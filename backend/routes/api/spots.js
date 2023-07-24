@@ -220,13 +220,16 @@ for (const spot of spots) {
             const avgRating = spotRating.dataValues.avgRating;
 
             if(spotRating) spot.dataValues.avgRating = avgRating
+            spot.lat = parseFloat(spot.lat);
+            spot.lng = parseFloat(spot.lng);
+            spot.price = parseFloat(spot.price);
+            spot.avgRating = parseFloat(spot.avgRating);
         }
-    if(spots){
-        spots.lat = parseFloat(spots.lat)
-        spots.lng = parseFloat(spots.lng)
-        spots.price = parseFloat(spots.price)
-        spots.avgRating = parseFloat(spots.avgRating)
-        return res.status(200).json({"Spots":spots})}
+
+
+      if (spots) {
+        return res.status(200).json({ "Spots": spots });
+      }
 })
 
 // get details of spot from id
