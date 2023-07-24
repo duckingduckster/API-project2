@@ -259,12 +259,23 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
 
     if (newSpot) {
 
-        delete newSpot.avgRating;
+        const spotWithoutAvgRating = {
+            id: newSpot.id,
+            ownerId: newSpot.ownerId,
+            address: newSpot.address,
+            city: newSpot.city,
+            state: newSpot.state,
+            country: newSpot.country,
+            lat: parseFloat(newSpot.lat),
+            lng: parseFloat(newSpot.lng),
+            name: newSpot.name,
+            description: newSpot.description,
+            price: parseFloat(newSpot.price),
+            updatedAt: newSpot.updatedAt,
+            createdAt: newSpot.createdAt
+        };
 
-        newSpot.lat = parseFloat(newSpot.lat)
-        newSpot.lng = parseFloat(newSpot.lng)
-        newSpot.price = parseFloat(newSpot.price)
-        return res.json(newSpot)
+        return res.json(spotWithoutAvgRating);
     }
 
 })
