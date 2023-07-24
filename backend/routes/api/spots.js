@@ -255,15 +255,14 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
     const ownerId = req.user.id
     const { address, city, state, country, lat, lng, name, description, price} = req.body
 
-    let newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price})
+    let newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price,})
 
     if (newSpot) {
-        
-        newSpot = newSpot.toJSON({ exclude: ['avgRating'] })
+
         newSpot.lat = parseFloat(newSpot.lat)
         newSpot.lng = parseFloat(newSpot.lng)
         newSpot.price = parseFloat(newSpot.price)
-        return res.json(newSpot)
+        return res.json(newSpot.toJSON({ exclude: ['avgRating'] }))
     }
 
 })
