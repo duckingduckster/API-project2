@@ -371,7 +371,10 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
             spotId: parseInt(spotId)
         }
     })
+    if (!spot)return res.status(404).json({ message: "Spot couldn't be found" })
+
     if(userId === spot.ownerId )return res.status(403).json({message:'Cannot review your own spot'})
+
     if(spot){
         if(!userReview){
             let newReview = await Review.create({ userId, spotId, review, stars})
@@ -383,7 +386,8 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
             }
         }else return res.status(500).json({message:"User already has a review for this spot"})
 
-    }else return  res.status(404).json({message:"Spot couldn't be found"})
+    }
+    // else return  res.status(404).json({message:"Spot couldn't be found"})
 })
 
 //get all bookings from spot id
