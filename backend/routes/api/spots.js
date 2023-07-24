@@ -168,16 +168,13 @@ router.get('/', validateQuery, async (req, res, next) =>{
         const avgRating = spotRating.dataValues.avgRating;
 
         if(spotRating) spot.dataValues.avgRating = avgRating
+        spot.lat = parseFloat(spot.lat);
+        spot.lng = parseFloat(spot.lng);
+        spot.price = parseFloat(spot.price);
+        spot.avgRating = parseFloat(spot.avgRating);
 }
 
-    let results = {}
-    results.Spots = spots
-    if(spots){
-        spots.lat = parseFloat(spots.lat)
-        spots.lng = parseFloat(spots.lng)
-        spots.price = parseFloat(spots.price)
-        spots.avgRating = parseFloat(spots.avgRating)
-        return res.status(200).json({Spots:spots})}
+        return res.status(200).json({"Spots":spots})
 })
 
 

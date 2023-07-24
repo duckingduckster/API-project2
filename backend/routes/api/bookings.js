@@ -32,6 +32,9 @@ router.get('/current', requireAuth, async(req, res, next)=>{
         if (previewImage){
             spot.dataValues.previewImage = previewImage.url
         }
+        spot.lat = parseFloat(spot.lat);
+        spot.lng = parseFloat(spot.lng);
+        spot.price = parseFloat(spot.price);
 }
     return res.json({Bookings: currBookings})
 })
