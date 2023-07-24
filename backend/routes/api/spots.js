@@ -181,6 +181,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
     const current = req.user.id
 
     const spots = await Spot.findAll({
+        where: { ownerId: current },
         include:[
         {   model: Review,
             attributes: []
@@ -352,7 +353,7 @@ router.get('/:spotId/reviews', async (req, res, next)=>{
         ]
     })
 
-    if(reviews.length) return res.json({Reviews: reviews})
+    if(reviews) return res.json({Reviews: reviews})
     else return res.status(404).json({message:"Spot couldn't be found"})
 })
 
