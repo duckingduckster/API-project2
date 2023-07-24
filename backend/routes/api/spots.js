@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const { Spot, Booking, User, Review, ReviewImage, SpotImage } = require('../../db/models')
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const sequelize = require( 'sequelize')
 const { handleValidationErrors } = require('../../utils/validation');
 const spot = require('../../db/models/spot');
@@ -236,14 +236,19 @@ router.get('/:spotId', async(req, res, next)=>{
 })
 
 //create a spot
-router.post('/', requireAuth, validateSpot, async(req, res, next)=>{
+router.post('/', restoreUser ,requireAuth, validateSpot, async(req, res, next)=>{
     const ownerId = req.user.id
     const { address, city, state, country, lat, lng, name, description, price} = req.body
 
-    const newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price})
+    let newSpot = await Spot.create ({ ownerId, address, city, state, country, lat, lng, name, description, price})
 
-
-    return res.status(201).json(newSpot)
+    if (newSpot) {
+        newSpot = newSpot.toJSON()
+        newSpot.lat = parseFloat(newSpot.lat)
+        newSpot.lng = parseFloat(newSpot.lng)
+        newSpot.price = parseFloat(newSpot.price)
+        return res.status(201).json(newSpot)
+    }
 
 })
 
