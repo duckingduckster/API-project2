@@ -259,8 +259,8 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
 
     if (newSpot) {
 
-        delete newSpot.avgrating;
-        
+        delete newSpot.avgRating;
+
         newSpot.lat = parseFloat(newSpot.lat)
         newSpot.lng = parseFloat(newSpot.lng)
         newSpot.price = parseFloat(newSpot.price)
