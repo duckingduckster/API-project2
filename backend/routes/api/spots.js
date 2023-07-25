@@ -317,7 +317,7 @@ router.post('/:spotId/images', requireAuth, async(req, res, next)=>{
             }
             return res.status(200).json(returnSpotImage)
 
-        } else return res.status(403).json({message:"Forbiden"})
+        } else return res.status(403).json({message:"Forbidden"})
 
     } else return res.status(404).json({message:"Spot couldn't be found"})
 })
@@ -335,7 +335,7 @@ router.put('/:spotId', requireAuth, validateSpot, async(req, res, next)=>{
             const updatedSpot = await currentSpot.update({ address, city, state, country, lat, lng, name, description, price})
             return res.status(200).json(updatedSpot)
 
-        }else return res.status(403).json({message:"Forbbiden"})
+        }else return res.status(403).json({message:"Forbidden"})
 
     }else return res.status(404).json({message:"Spot couldn't be found"})
 })

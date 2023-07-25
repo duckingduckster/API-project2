@@ -52,7 +52,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next)=>{
 
     if(!booking)return res.status(400).json({message:"Booking couldn't be found"})
 
-    if(userId !== booking.userId)return res.status(403).json({message: "Unauthorized"})
+    if(userId !== booking.userId)return res.status(403).json({message: "Forbidden"})
 
     if((bookingEndDate <= bookingStartDate))return res.status(400).json({
         message: 'Bad Request',
@@ -118,19 +118,23 @@ router.delete('/:bookingId', requireAuth, async(req, res, next)=>{
 
     const booking = await Booking.findByPk(bookingId)
 
+    if(!booking)return res.status(404).json({message:"Booking couldn't be found"})
+
     const start = new Date(booking.startDate)
+
 
     if(start < currDate)res.status(403).json({message:"Bookings that have been started can't be deleted"})
 
     const spot = await Spot.findByPk(booking.spotId)
 
-    if(!booking)return res.status(404).json({message:"Booking couldn't be found"})
 
     if(spot.ownerId === userId){
         await booking.destroy()
         return res.status(200).json({message:"Successfully deleted"})
 
-    }else if(booking.userId !== userId)return res.status(403).json({message:"Unauthorized"})
+    }else if(booking.userId !== userId)return res.status(403).json({message:"Forbidden"})
+    await booking.destroy()
+    return res.json({message:"Successfully deleted"})
 })
 
 

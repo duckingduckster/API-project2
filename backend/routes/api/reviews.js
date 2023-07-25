@@ -72,7 +72,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res, next)=>{
             })
         }else return res.status(403).json({message:"Maximum number of images for this resource was reached"})
 
-    }else return res.status(403).json({message:'Unathorized'})
+    }else return res.status(403).json({message:'Forbidden'})
 
 }else return res.status(404).json({message:"Review couldn't be found"})
 })
@@ -90,7 +90,7 @@ router.put('/:reviewId', requireAuth, validateReview, async(req, res, next)=>{
             await checkReview.update({ review, stars})
             return res.status(200).json(checkReview)
 
-        }else return res.status(403).json({message:'Unauthorized'})
+        }else return res.status(403).json({message:'Forbidden'})
 
     }else return res.status(404).json({message:"Review couldn't be found"})
 })
@@ -107,7 +107,7 @@ router.delete('/:reviewId', requireAuth, async(req, res, next)=>{
             await checkReview.destroy()
             return res.status(200).json({message:"Successfully deleted"})
 
-        }else return res.status(403).json({message:'Unauthorized'})
+        }else return res.status(403).json({message:'Forbidden'})
 
     }else return res.status(404).json({message:"Review couldn't be found"})
 })

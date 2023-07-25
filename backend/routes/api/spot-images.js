@@ -20,7 +20,7 @@ router.delete('/:imageId', requireAuth, async(req, res, next)=>{
 
     const ownerId = image.Spot ? image.Spot.dataValues.ownerId : null
 
-    if (ownerId !== userId)return res.status(403).json({message: "Unauthorized"})
+    if (ownerId !== userId)return res.status(403).json({message: "Forbidden"})
 
     await image.destroy()
     return res.status(200).json({message:"Successfully deleted"})
