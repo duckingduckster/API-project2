@@ -217,7 +217,7 @@ for (const spot of spots) {
                 ],
                 attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
                             'description', 'price', 'createdAt', 'updatedAt',
-                            [sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
+                            [sequelize.fn("ROUND", sequelize.fn("AVG", sequelize.col("stars"))), "avgRating"]],
                 group: ['Spot.id'],
             })
             const avgRating = spotRating.dataValues.avgRating;
@@ -264,7 +264,6 @@ router.get('/:spotId', async(req, res, next)=>{
         spots.lat = parseFloat(spots.lat)
         spots.lng = parseFloat(spots.lng)
         spots.price = parseFloat(spots.price)
-        spots.avgRating = parseFloat(spots.avgRating)
         return res.status(200).json(spots)}
 
     else return res.status(404).json({message:"Spot couldn't be found"})
