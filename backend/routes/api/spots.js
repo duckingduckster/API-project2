@@ -66,6 +66,12 @@ const validateReview = [
         handleValidationErrors
 ]
 
+const validateUrl = [
+    check('url')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
+        handleValidationErrors
+]
 const validateQuery = [
     check('page')
         .optional(true)
@@ -296,7 +302,7 @@ router.post('/' ,requireAuth, validateSpot, async(req, res, next)=>{
 })
 
 // create an image base on id
-router.post('/:spotId/images', requireAuth, async(req, res, next)=>{
+router.post('/:spotId/images', requireAuth, validateUrl, async(req, res, next)=>{
     const spotId = req.params.spotId
     const userId = req.user.id
     const { url, preview} = req.body
@@ -306,9 +312,9 @@ router.post('/:spotId/images', requireAuth, async(req, res, next)=>{
     if (currentSpot) {
         if (userId === currentSpot.ownerId) {
             const spotImage = await SpotImage.create({
-                url: url,
-                preview: preview,
-                spotId: spotId
+                spotId: spotId,
+                url,
+                preview
             })
             const returnSpotImage = {
                 id: spotImage.id,
