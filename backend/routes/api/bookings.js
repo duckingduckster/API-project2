@@ -52,7 +52,7 @@ router.put('/:bookingId', requireAuth, async(req, res, next)=>{
 
     if(!booking)return res.status(400).json({message:"Booking couldn't be found"})
 
-    if(userId !== booking.userId)return res.status(403).json({message: "Forbidden"})
+    if(userId !== booking.userId)return res.status(403).json({message: "Unauthorized"})
 
     if((bookingEndDate <= bookingStartDate))return res.status(400).json({
         message: 'Bad Request',
@@ -132,9 +132,12 @@ router.delete('/:bookingId', requireAuth, async(req, res, next)=>{
         await booking.destroy()
         return res.status(200).json({message:"Successfully deleted"})
 
-    }else if(booking.userId !== userId)return res.status(403).json({message:"Forbidden"})
-    await booking.destroy()
-    return res.json({message:"Successfully deleted"})
+    } else if (booking.userId !== userId) {
+        return res.status(403).json({ message: "Forbidden" })
+    }
+
+    await booking.destroy();
+    return res.json({ message: "Successfully deleted" })
 })
 
 

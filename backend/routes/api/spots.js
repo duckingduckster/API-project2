@@ -180,7 +180,7 @@ router.get('/', validateQuery, async (req, res, next) =>{
         spot.avgRating = parseFloat(spot.avgRating);
 }
 
-        return res.status(200).json({"Spots":spots})
+        return res.status(200).json({"Spots":spots, page:page, size:size})
 })
 
 
@@ -204,9 +204,7 @@ for (const spot of spots) {
     if (previewImage) {
         spot.dataValues.previewImage = previewImage.dataValues.url;
     }
-    if (previewImage) {
-        spot.dataValues.previewImage = previewImage.dataValues.url;
-    }
+
     const spotRating = await Spot.findByPk(spot.id, {
 
             include:[
@@ -222,7 +220,9 @@ for (const spot of spots) {
             })
             const avgRating = spotRating.dataValues.avgRating;
 
-            if(spotRating) spot.dataValues.avgRating = avgRating
+
+            if (avgRating) {spot.dataValues.avgRating = parseFloat(avgRating)}
+            
             spot.lat = parseFloat(spot.lat);
             spot.lng = parseFloat(spot.lng);
             spot.price = parseFloat(spot.price);
