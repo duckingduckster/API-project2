@@ -19,6 +19,13 @@ const validateReview = [
         handleValidationErrors
 ]
 
+const validateUrl = [
+    check('url')
+        .isString({ checkFalsy: true })
+        .withMessage('Has to be a string'),
+        handleValidationErrors
+]
+
 //get all reviews of current user
 router.get('/current', requireAuth, async(req, res, next)=>{
     const current = req.user.id
@@ -47,7 +54,7 @@ router.get('/current', requireAuth, async(req, res, next)=>{
 })
 
 //add an image to review base on review id
-router.post('/:reviewId/images', requireAuth, async(req, res, next)=>{
+router.post('/:reviewId/images', requireAuth, validateUrl, async(req, res, next)=>{
     const reviewId = req.params.reviewId
     const userId = req.user.id
     const { url } = req.body
