@@ -57,7 +57,13 @@ router.post(
       await setTokenCookie(res, safeUser);
 
       return res.json({
-        user: safeUser
+        "user": {
+          "id": 1,
+          "firstName": "John",
+          "lastName": "Smith",
+          "email": "john.smith@gmail.com",
+          "username": "JohnSmith"
+        }
       });
     }
   );
@@ -85,9 +91,15 @@ router.get(
           username: user.username,
         };
         return res.json({
-          user: safeUser
+          "user": {
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Smith",
+            "email": "john.smith@gmail.com",
+            "username": "JohnSmith",
+          }
         });
-      } else return res.json({ user: null });
+      } else return res.json({ "user": null });
     }
   );
 

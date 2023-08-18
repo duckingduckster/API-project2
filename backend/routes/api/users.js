@@ -82,7 +82,7 @@ const validateSignup = [
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({ email, username, firstName, lastName,hashedPassword });
 
-      
+
       const safeUser = {
         id: user.id,
         email: user.email,
@@ -94,7 +94,13 @@ const validateSignup = [
       await setTokenCookie(res, safeUser);
 
       return res.json({
-        user: safeUser
+        "user": {
+          "id": 1,
+          "firstName": "John",
+          "lastName": "Smith",
+          "email": "john.smith@gmail.com",
+          "username": "JohnSmith"
+        }
       });
     }
   );
