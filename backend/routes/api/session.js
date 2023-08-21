@@ -59,13 +59,14 @@ router.post(
       await setTokenCookie(res, safeUser);
 
       return res.json({
-        user: {
-          id: 1,
-          firstName: "John",
-          lastName: "Smith",
-          email: "john.smith@gmail.com",
-          username: "JohnSmith"
-        }
+        // user: {
+        //   id: 1,
+        //   firstName: "John",
+        //   lastName: "Smith",
+        //   email: "john.smith@gmail.com",
+        //   username: "JohnSmith"
+        // }
+        user: safeUser
       });
     }
   );
@@ -95,13 +96,14 @@ router.get(
           updatedAt: user.updatedAt
         };
         return res.json({
-          user: {
-            id: 1,
-            firstName: "John",
-            lastName: "Smith",
-            email: "john.smith@gmail.com",
-            username: "JohnSmith",
-          }
+          // user: {
+          //   id: 1,
+          //   firstName: "John",
+          //   lastName: "Smith",
+          //   email: "john.smith@gmail.com",
+          //   username: "JohnSmith",
+          // }
+          user: safeUser
         });
       } else return res.json({ "user": null });
     }
