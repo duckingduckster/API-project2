@@ -1,0 +1,9 @@
+.profile-dropdown{
+    display:flex;
+    flex-direction:column
+
+}
+
+.hidden {
+    display: none;
+}
