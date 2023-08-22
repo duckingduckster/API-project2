@@ -1,10 +1,10 @@
 // frontend/src/App.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 // import LoginFormPage from "./store/components/LoginFormPage";
 import * as sessionActions from "./store/session";
-import SignupFormPage from "./store/components/SignUpPage";
+// import SignupFormPage from "./store/components/SignupFormModal";
 import Navigation from "./store/components/Navigation";
 
 
@@ -23,9 +23,9 @@ function App() {
           {/* <Route path="/login">
             <LoginFormPage />
           </Route> */}
-          <Route path="/signup">
+          {/* <Route path="/signup">
             <SignupFormPage />
-          </Route>
+          </Route> */}
         </Switch>
       )}
     </>
