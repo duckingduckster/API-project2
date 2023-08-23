@@ -1,0 +1,26 @@
+.profile-dropdown{
+    display: flex;
+    flex-direction: column;
+    right: auto;
+    top: 100%;
+    cursor: pointer
+
+}
+
+.hidden {
+    display: none;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+.fa-solid fa-face-smile{
+    position: fixed;
+}
