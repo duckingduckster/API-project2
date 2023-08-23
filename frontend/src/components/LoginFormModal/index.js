@@ -20,11 +20,25 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+        if(data && data.errors){
+          setErrors(data.errors)
+        }else{
+          setErrors({ credential: 'The provided credentials were invalid.'})
         }
+
       });
   };
+
+  const demoLogIn = (e) => {
+    e.preventDefault()
+    setErrors([])
+    const demoInfo ={
+      credential: 'demoUser',
+      password: 'demoPassword'
+    }
+    return dispatch(sessionActions.login(demoInfo)).then(closeModal)
+  }
+
 
   return (
     <>
@@ -51,7 +65,8 @@ function LoginFormModal() {
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled= { credential.length < 4 || password.length < 6 }>Log In</button>
+        <button onClick={demoLogIn}>Log in as Demo User</button>
       </form>
     </>
   );

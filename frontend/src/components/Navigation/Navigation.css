@@ -1,9 +1,12 @@
 .profile-dropdown{
-    display: flex;
+    position: absolute;
+    display:flex;
     flex-direction: column;
-    right: auto;
-    top: 100%;
+    align-items: center;
+    right: .5%;
+    top: 90%;
     cursor: pointer
+
 
 }
 
@@ -20,7 +23,3 @@ ul {
     margin: 0;
     position: relative;
   }
-
-.fa-solid fa-face-smile{
-    position: fixed;
-}
