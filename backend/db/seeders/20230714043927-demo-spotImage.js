@@ -24,6 +24,11 @@ module.exports = {
         spotId: 3,
         url: 'https://m.media-amazon.com/images/M/MV5BMjgwNzFjZGYtNTRhNC00YzA0LTliNmYtNTUyYjZiMWM1MDEwXkEyXkFqcGdeQXVyNzgxMzc3OTc@._V1_.jpg',
         preview: true
+      },
+      {
+        spotId: 4,
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOeKAJhLoEvKt1N2mA68UbcnC1EE8aNoq99h4m5kaXsEihy9WSSlyY9whFG5_fALrAnH0&usqp=CAU',
+        preview: true
       }
     ], {});
   },

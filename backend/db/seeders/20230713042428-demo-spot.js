@@ -45,6 +45,18 @@ module.exports = {
         name:'sdada3',
         description:'qwewq',
         price:123
+      },
+      {
+        ownerId:3,
+        address:'45678 E blvd',
+        city:'New York',
+        state:'NY',
+        country:'USA',
+        lat:7,
+        lng:8,
+        name:'penthouse',
+        description:'wow',
+        price:12300
       }
     ], {});
   },
@@ -53,7 +65,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      price : { [Op.in]: [123] }
+      price : { [Op.in]: [123, 12300] }
     }, {});
   }
 };
