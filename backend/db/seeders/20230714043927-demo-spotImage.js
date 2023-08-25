@@ -12,17 +12,17 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
       spotId: 1,
-      url: 'png',
+      url: 'https://pm1.aminoapps.com/6760/382b4d9532b34c9a79df99fd7182da0e9132a6a5v2_hq.jpg',
       preview: true
       },
       {
         spotId: 2,
-        url: 'png2',
+        url: 'https://storage.googleapis.com/stateless-thedailyfandom-org/2020/05/53df8964-159fdae8212e4647667344820984.jpg',
         preview: true
       },
       {
         spotId: 3,
-        url: 'png3',
+        url: 'https://m.media-amazon.com/images/M/MV5BMjgwNzFjZGYtNTRhNC00YzA0LTliNmYtNTUyYjZiMWM1MDEwXkEyXkFqcGdeQXVyNzgxMzc3OTc@._V1_.jpg',
         preview: true
       }
     ], {});
