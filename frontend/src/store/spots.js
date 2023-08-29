@@ -2,6 +2,10 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOT = 'spots/GET_SPOT'
 const SPOT_DETAILS = 'spots/SPOT_DETAILS'
+const GET_SPOT_ID = 'spots/GET_SPOT_ID'
+const CREATE_SPOT = 'spots/CREATE_SPOT'
+const UPDATE_SPOT = 'spots/UPDATE_SPOT'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 const getSpot = (spots) => {
     return {
@@ -10,12 +14,40 @@ const getSpot = (spots) => {
 }
 }
 
-const spotDetails = (spotDetail) =>{
+const spotDetails = (spotDetail) => {
     return {
         type: SPOT_DETAILS,
         spotDetail
     }
 
+}
+
+const spotId = (spot) => {
+    return {
+        type: GET_SPOT_ID,
+        spot
+    }
+}
+
+const createSpot = (spot) => {
+    return {
+        type: CREATE_SPOT,
+        spot
+    }
+}
+
+const updateSpot = (spot) => {
+    return {
+        type: UPDATE_SPOT,
+        spot
+    }
+}
+
+const deleteSpot = (spot) => {
+    return {
+        type: DELETE_SPOT,
+        spot
+    }
 }
 
 export const getSpots = () => async (dispatch) => {
@@ -41,6 +73,18 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
         console.error('Failed to get spot details')
     }
 }
+
+export const getSpotId = (id) => async (dispatch) => {
+    const response = await csrfFetch(`api/spots/${spotId}`)
+
+    if(response.ok) {
+        const spotId = await response.json()
+        dispatch(getSpotId(spotId))
+    }else {
+        console.error('Failed to get spot id')
+    }
+}
+
 
 const initialState = { spots: [] }
 
