@@ -62,7 +62,7 @@ export const getSpots = () => async (dispatch) => {
 }
 
 export const getSpotDetails = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'GET'
     })
 
@@ -75,18 +75,18 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
 }
 
 export const getSpotId = (id) => async (dispatch) => {
-    const response = await csrfFetch(`api/spots/${spotId}`)
+    const response = await csrfFetch(`/api/spots/${spotId}`)
 
     if(response.ok) {
         const spotId = await response.json()
-        dispatch(getSpotId(spotId))
+        dispatch(spotId(spotId))
     }else {
         console.error('Failed to get spot id')
     }
 }
 
 
-const initialState = { spots: [] }
+const initialState = { spots: [] , spotDetail: {}}
 
 const spotsReducer = (state = initialState, action) => {
     let newState = {...state}

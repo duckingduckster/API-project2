@@ -10,11 +10,11 @@ const spotReviews = (review) => {
 }
 
 export const getSpotReviews = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`api/spots/${spotId}/reviews`)
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     if(response.ok){
         const review = await response.json()
-        dispatch(getSpotReviews(review))
+        dispatch(spotReviews(review))
     }else {
         console.error('Failed to get review')
     }
@@ -27,6 +27,8 @@ const reviewReducer = (state = initialState, action) => {
     switch(action.type){
         case GET_REVIEWS:
             return { ...newState, reviews: action.reviews}
+            default:
+                return state
     }
 }
 
