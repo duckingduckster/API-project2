@@ -39,7 +39,6 @@ function LoginFormModal() {
     return dispatch(sessionActions.login(demoInfo)).then(closeModal)
   }
 
-
   return (
     <>
       <h1>Log In</h1>

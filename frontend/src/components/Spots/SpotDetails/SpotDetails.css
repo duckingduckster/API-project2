@@ -1,0 +1,9 @@
+.review-modal-container {
+    display: none;
+    /* other styles */
+  }
+
+  .review-modal-container.is-active {
+    display: block;
+    /* other styles */
+  }
