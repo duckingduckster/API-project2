@@ -222,7 +222,7 @@ for (const spot of spots) {
 
 
             if (avgRating) {spot.dataValues.avgRating = parseFloat(avgRating)}
-            
+
             spot.lat = parseFloat(spot.lat);
             spot.lng = parseFloat(spot.lng);
             spot.price = parseFloat(spot.price);
@@ -397,7 +397,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
     const { review, stars } = req.body
 
     const spot = await Spot.findByPk(spotId)
-    const userReview = await await Review.findOne({
+    const userReview = await Review.findOne({
         where:
         {
             userId,
