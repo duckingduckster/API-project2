@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addingReview } from "../../../store/review";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-function CreateReviewModal({ spotId, isOpen, closeModal, showModal}){
+function CreateReviewModal({ spotId, isOpen, closeModal, showModal, onReviewPosted}){
     const dispatch = useDispatch()
-    const history = useHistory()
+
 
     const [review, setReview] = useState('')
     const [stars, setStars] = useState(0)
@@ -19,24 +18,43 @@ function CreateReviewModal({ spotId, isOpen, closeModal, showModal}){
         }
     }, [isOpen])
 
-    const handleSubmit = async (e) =>{
-        e.preventDefault()
-        const reviewData = { review, stars }
-        console.log('this is',reviewData)
-        setErrors({});
-        return dispatch(addingReview(spotId, reviewData))
-          .then(closeModal())
+    // const handleSubmit = async (e) =>{
+    //     e.preventDefault()
+    //     const reviewData = { review, stars }
+    //     setErrors({});
+    //     let postedReview = await dispatch(addingReview(spotId, reviewData))
+    //       .then(closeModal())
+    //       .catch(async (res) => {
+    //         const data = await res.json();
+    //         if(data && data.errors){
+    //             setErrors(Array.isArray(data.errors) ? data.errors : [data.errors])
+    //         }else{
+    //           setErrors(['The provided review was invalid.'])
+    //         }
+
+    //       });
+    //     if(postedReview){
+    //         window.location.reload()
+    //     }
+    // }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const reviewDetails = { review, stars };
+
+        dispatch(addingReview(spotId, reviewDetails))
+          .then(() => {
+            closeModal();
+            
+            if (onReviewPosted) {
+              onReviewPosted();
+            }
+          })
           .catch(async (res) => {
             const data = await res.json();
-            if(data && data.errors){
-                setErrors(Array.isArray(data.errors) ? data.errors : [data.errors])
-            }else{
-              setErrors(['The provided review was invalid.'])
-            }
-
+            if (data && data.message) setErrors([data.message]);
+            else setErrors("An error occurred. Please try again.");
           });
-
-    }
+      };
 
     const handleStarClick = (i) => {
         setStars(i)

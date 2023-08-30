@@ -15,6 +15,11 @@ function Navigation({ isLoaded }) {
           <i className="fa-solid fa-face-smile"></i>
         </NavLink>
       </li>
+      {sessionUser && (
+        <li>
+          <NavLink className="create-spot-link" to="/spots/new">Create a New Spot</NavLink>
+        </li>
+      )}
       {isLoaded && (
         <li>
           <ProfileButton user={sessionUser} />

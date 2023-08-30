@@ -39,8 +39,12 @@ export const addingReview = (spotId, review) => async (dispatch) => {
     })
 
     if(response.ok){
-        const Newreview = await response.json()
-        dispatch(addReviews(spotId, Newreview))
+        const ewReview = await response.json()
+        dispatch(addReviews(spotId, ewReview))
+        return ewReview
+    } else{
+        const errors = await response.json()
+        return errors
     }
 }
 
@@ -52,19 +56,9 @@ const reviewReducer = (state = initialState, action) => {
         case GET_REVIEWS:
             return { ...newState, reviews: action.reviews}
         case ADD_REVIEWS:
-            const spotId = action.newReview.spotId
-            const newReview = action.newReview
-            const existingReviews = newState.reviews[spotId] || {}
-            const addReview = {
-                ...existingReviews,
-                [newReview.id]: newReview
-            }
             return {
-                ...newState,
-                reviews: {
-                    ...newState.reviews,
-                    [spotId]: addReview
-                }
+                ...state,
+                [action.spotId]: [action.review, ...(state[action.spotId] || [])], // add the new review to the list of reviews for the given spotId AT THE TOP of the reviews
             }
             default:
                 return state

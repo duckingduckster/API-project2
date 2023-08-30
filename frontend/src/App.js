@@ -9,6 +9,8 @@ import Navigation from "./components/Navigation";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import SpotList from "./components/Spots/LandingPage";
 import SpotDetails from "./components/Spots/SpotDetails";
+import CreateSpot from "./components/Spots/CreateSpot";
+import CreateReviewModal from "./components/Reviews/CreateReview";
 
 
 function App() {
@@ -23,11 +25,17 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path='/'>
-            <SpotList/>
+            <Route path='/spots/:spotId/reviews'>
+              <CreateReviewModal/>
+            </Route>
+            <Route path='/spots/new'>
+              <CreateSpot/>
             </Route>
             <Route exact path='/spots/:spotId'>
               <SpotDetails/>
+            </Route>
+            <Route exact path='/'>
+              <SpotList/>
             </Route>
         </Switch>
       )}

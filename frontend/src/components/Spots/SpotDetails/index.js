@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom/cjs/react-router-dom.min"
+import { useParams } from "react-router-dom"
 import { getSpotDetails } from "../../../store/spots"
 import { getSpotReviews } from "../../../store/review"
 import CreateReviewModal from "../../Reviews/CreateReview"
@@ -82,8 +82,8 @@ const SpotDetails = () => {
                                     isOpen={showModal}
                                     />
                                     </div>}
-                            {sortedReviews.length > 0 ? (
-                            sortedReviews.map(review => (
+                            {sortedReviews && sortedReviews.length > 0 ? (
+                            sortedReviews?.map(review => (
                                     <div key={review.id} className="single-review">
                                         <div className="review-meta">
                                             <strong>{review.firstName}</strong>
