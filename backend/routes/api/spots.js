@@ -411,12 +411,12 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
     if(spot){
         if(!userReview){
             const newReview = await Review.create({ userId, spotId, review, stars})
-            return res.status(201).json(newReview)
-            // if (newReview) {
-            //     newReview = newReview.toJSON()
-            //     newReview.stars = parseFloat(newReview.stars)
-            //     return res.status(201).json(newReview)
-            // }
+            // return res.status(201).json(newReview)
+            if (newReview) {
+                newReview = newReview.toJSON()
+                newReview.stars = parseFloat(newReview.stars)
+                return res.status(201).json(newReview)
+            }
         }else return res.status(500).json({message:"User already has a review for this spot"})
 
     }
