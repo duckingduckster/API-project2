@@ -57,12 +57,12 @@ const CreateSpot = () => {
         if(!state) {
             errors.state = "State is required"
         }
-        if(!lng) {
-            errors.lng = "Lng is required"
-        }
-        if(!lat) {
-            errors.lat = "Lat is requried"
-        }
+        // if(!lng) {
+        //     errors.lng = "Lng is required"
+        // }
+        // if(!lat) {
+        //     errors.lat = "Lat is requried"
+        // }
         if(!description || description.length < 30) {
             errors.description = "Description needs atleast 30 characters"
         }
@@ -81,7 +81,7 @@ const CreateSpot = () => {
             }
         })
         setFormData({ ...formData, errors });
-
+        console.log("Validation errors", errors)
         return Object.keys(errors).length === 0;
     };
 
@@ -90,9 +90,9 @@ const CreateSpot = () => {
 
         if (validateForm()) {
             setFormData({ ...formData, validSubmit: true })
-
+            console.log("Submitting form", formData)
             const spotDetails = {
-                address,
+            address,
             city,
             state,
             country,

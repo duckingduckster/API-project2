@@ -6,10 +6,11 @@ const UPDATE_REVIEW = 'reviews/UPDATE_REVIEWS'
 const DELETE_REVIEW = 'reviews/DELETE_REVIEWS'
 
 
-const spotReviews = (review) => {
+const spotReviews = (spotId, reviews) => {
     return{
         type: GET_REVIEWS,
-        review
+        spotId,
+        reviews
     }
 }
 
@@ -26,7 +27,8 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if(response.ok){
         const review = await response.json()
-        dispatch(spotReviews(review))
+        console.log('this is review thunbk',review.Reviews)
+        dispatch(spotReviews(spotId, review.Reviews))
     }else {
         console.error('Failed to get review')
     }
@@ -51,17 +53,25 @@ export const addingReview = (spotId, review) => async (dispatch) => {
 const initialState = { reviews: {} }
 
 const reviewReducer = (state = initialState, action) => {
-    let newState = {...state}
     switch(action.type){
         case GET_REVIEWS:
-            return { ...newState, reviews: action.reviews}
+            return {
+                ...state,
+                reviews: {
+                    ...state.reviews,
+                    [action.spotId]: action.reviews
+                }
+            };
         case ADD_REVIEWS:
             return {
                 ...state,
-                [action.spotId]: [action.review, ...(state[action.spotId] || [])], // add the new review to the list of reviews for the given spotId AT THE TOP of the reviews
-            }
-            default:
-                return state
+                reviews: {
+                    ...state.reviews,
+                    [action.spotId]: [action.review, ...(state.reviews[action.spotId] || [])],
+                }
+            };
+        default:
+            return state;
     }
 }
 

@@ -9,8 +9,10 @@ import './SpotDetails.css'
 const SpotDetails = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
+    console.log('This is the spotId:', spotId)
     const spotDetail = useSelector(state => state.spots.spotDetail)
-    const reviews = useSelector(state => state.reviews)
+    const reviews = useSelector((state) => Object.values(state.reviews.reviews) || [])
+    console.log('this is reviews', reviews)
     const spot = useSelector(state => state.spots.spots)
     const user = useSelector((state) => state.session.user)
     const [showModal, setShowModal] = useState(false);
@@ -18,8 +20,11 @@ const SpotDetails = () => {
     const closeModal = () => setShowModal(false);
 
     useEffect(() =>{
-        dispatch(getSpotDetails(spotId))
         dispatch(getSpotReviews(spotId))
+    }, [dispatch, spotId])
+
+    useEffect(() =>{
+        dispatch(getSpotDetails(spotId))
     }, [dispatch, spotId])
 
     const handleReserveClick = () => {
@@ -29,16 +34,16 @@ const SpotDetails = () => {
     const calculateReviewInfo = (reviews) => {
         if (!reviews) return { avgRating: 'New', count: 0 };
 
-        const totalRating = reviews.reduce((acc, review) => acc + review.stars, 0);
+        const totalRating = reviews?.reduce((acc, review) => acc + review.stars, 0);
         const avgRating = (totalRating / reviews.length).toFixed(2);
 
         return { avgRating, count: reviews.length };
-      };
+    }
 
       const { avgRating, count } = calculateReviewInfo(reviews)
 
       const sortedReviews = reviews ? [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : []
-
+        console.log('this is sortedR',sortedReviews[0])
 
     return spotDetail && (
         <div className="spot-detail-container">
@@ -83,7 +88,7 @@ const SpotDetails = () => {
                                     />
                                     </div>}
                             {sortedReviews && sortedReviews.length > 0 ? (
-                            sortedReviews?.map(review => (
+                            sortedReviews[0]?.map(review => (
                                     <div key={review.id} className="single-review">
                                         <div className="review-meta">
                                             <strong>{review.firstName}</strong>
