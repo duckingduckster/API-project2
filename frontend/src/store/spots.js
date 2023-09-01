@@ -125,6 +125,21 @@ export const createImageT = (spotId, imageUrl) => async (dispatch) => {
   }
 }
 
+export const updateSpotT = (spotId, updatedData) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        body: JSON.stringify(updatedData)
+    });
+
+    if(response.ok) {
+        const updatedSpot = await response.json();
+        dispatch(updateSpot(updatedSpot));
+        return updatedSpot;
+    } else {
+        console.error('Failed to update spot');
+    }
+}
+
 const initialState = { spots: [] , spotDetail: {}}
 
 const spotsReducer = (state = initialState, action) => {
@@ -142,6 +157,11 @@ const spotsReducer = (state = initialState, action) => {
         case CREATE_IMAGE:
             newState[action.spotImage.id] = action.spotImage;
             return newState;
+        case UPDATE_SPOT:
+            const updatedSpotsList = newState.spots.map(spot =>
+                spot.id === action.spot.id ? action.spot : spot)
+            newState.spots = updatedSpotsList
+            return newState
         default:
             return state
     }
