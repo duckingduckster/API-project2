@@ -140,6 +140,17 @@ export const updateSpotT = (spotId, updatedData) => async (dispatch) => {
     }
 }
 
+export const deleteSpotT = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE'
+    })
+
+    if(response.ok) {
+        const deletedSpot = await response.json()
+        dispatch(deleteSpot(spotId))
+    }
+}
+
 const initialState = { spots: [] , spotDetail: {}}
 
 const spotsReducer = (state = initialState, action) => {
@@ -161,6 +172,9 @@ const spotsReducer = (state = initialState, action) => {
             const updatedSpotsList = newState.spots.map(spot =>
                 spot.id === action.spot.id ? action.spot : spot)
             newState.spots = updatedSpotsList
+            return newState
+        case DELETE_SPOT:
+            newState.spots = newState.spots.filter(spot => spot.id !== action.spot.id);
             return newState
         default:
             return state
