@@ -7,6 +7,7 @@ const CREATE_SPOT = 'spots/CREATE_SPOT'
 const CREATE_IMAGE = 'spots/CREATE_IMAGE'
 const UPDATE_SPOT = 'spots/UPDATE_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
+const USER_SPOTS = 'spots/USER_SPOTS'
 
 const getSpot = (spots) => {
     return {
@@ -55,6 +56,13 @@ const deleteSpot = (spot) => {
     return {
         type: DELETE_SPOT,
         spot
+    }
+}
+
+const userSpots = (spots) => {
+    return {
+        type: USER_SPOTS,
+        spots
     }
 }
 
@@ -151,7 +159,18 @@ export const deleteSpotT = (spotId) => async (dispatch) => {
     }
 }
 
-const initialState = { spots: [] , spotDetail: {}}
+export const getUserSpots = () => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/current`)
+
+    if(response.ok){
+
+        const spots = await response.json()
+        console.log('thunk spots', spots.Spots)
+        dispatch(userSpots(spots.Spots))
+    }
+}
+
+const initialState = { spots: [] , spotDetail: {}, userSpots: {}}
 
 const spotsReducer = (state = initialState, action) => {
     let newState = {...state}
@@ -174,8 +193,11 @@ const spotsReducer = (state = initialState, action) => {
             newState.spots = updatedSpotsList
             return newState
         case DELETE_SPOT:
-            newState.spots = newState.spots.filter(spot => spot.id !== action.spot.id);
+            newState.spots = newState.spots.filter(spot => spot.id !== action.spot)
             return newState
+        case USER_SPOTS:
+            newState.userSpots = action.spots;
+            return newState;
         default:
             return state
     }

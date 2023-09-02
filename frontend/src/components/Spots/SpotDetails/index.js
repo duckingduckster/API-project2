@@ -9,11 +9,9 @@ import './SpotDetails.css'
 const SpotDetails = () => {
     const dispatch = useDispatch()
     const { spotId } = useParams()
-    console.log('This is the spotId:', spotId)
     const spotDetail = useSelector(state => state.spots.spotDetail)
     const reviews = useSelector((state) => Object.values(state.reviews.reviews) || [])
-    console.log('this is reviews', reviews)
-    const spot = useSelector(state => state.spots.spots)
+    // const spot = useSelector(state => state.spots.spots)
     const user = useSelector((state) => state.session.user)
     const [showModal, setShowModal] = useState(false);
     const openModal = () => setShowModal(true);
@@ -31,6 +29,9 @@ const SpotDetails = () => {
         alert("Feature coming soon");
     };
 
+    const mainImage = spotDetail?.SpotImages?.find(image => image.preview === true);
+    const additionalImages = spotDetail?.SpotImages?.filter(image => !image.preview).slice(0, 4)
+
     const calculateReviewInfo = (reviews) => {
         if (!reviews) return { avgRating: 'New', count: 0 };
 
@@ -40,10 +41,10 @@ const SpotDetails = () => {
         return { avgRating, count: reviews.length };
     }
 
-      const { avgRating, count } = calculateReviewInfo(reviews)
 
-      const sortedReviews = reviews ? [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : []
-        console.log('this is sortedR',sortedReviews[0])
+    const { avgRating, count } = calculateReviewInfo(reviews)
+
+    const sortedReviews = reviews ? [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : []
 
     return spotDetail && (
         <div className="spot-detail-container">
@@ -56,11 +57,16 @@ const SpotDetails = () => {
                         </span>
                         <div className="image-gallery">
                             <div className='main-spot-img'>
-                                {spotDetail?.SpotImages?.find(image => image.preview === true) ?
-                                <img src={spotDetail?.SpotImages.find(image => image.preview === true).url} alt={spotDetail?.name} /> :
-                                <p>No image available</p>
+                                {mainImage ?
+                                    <img src={mainImage.url} alt={spotDetail?.name} /> :
+                                    <p>No main image available</p>
                                 }
                             </div>
+                                <div className="additional-images">
+                                    {additionalImages?.map((image, index) => (
+                                    <img key={index} src={image.url} alt={`Additional ${index}`} />
+                                 ))}
+                                </div>
                         </div>
                         <p>Hosted by {spotDetail?.Owner?.firstName} {spotDetail?.Owner?.lastName}</p>
                         <p>{spotDetail?.description}</p>

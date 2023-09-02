@@ -1,26 +1,26 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { deleteSpotT } from "../../../store/spots"
 
-const DeleteSpotModal = ({ spotId }) =>{
+const DeleteSpotModal = ({ spotId, isOpen, onClose, onDelete }) =>{
     const dispatch = useDispatch()
     const modalRef = useRef()
     const [openModal, setOpenModal] = useState(true)
 
-    const handleDelete = () => {
-        const deletedSpot = dispatch(deleteSpotT(spotId))
+    const handleDelete = async () => {
+      const deletedSpot = await dispatch(deleteSpotT(spotId))
 
-        if(deletedSpot){
-            setOpenModal(false)
-            window.location.reload()
-        }
-    }
+      // if (deletedSpot) {
+      //     setOpenModal(false);
+      //     window.location.reload();
+      // }
+  }
 
 
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-          closeModal();
+          setOpenModal(false);
         }
       };
 
@@ -38,7 +38,7 @@ const DeleteSpotModal = ({ spotId }) =>{
             <button className="deleteButton" onClick={handleDelete}>
               Yes (Delete Spot)
             </button>
-            <button className="cancelButton" onClick={() => setShowModal(false)}>
+            <button className="cancelButton" onClick={() => setOpenModal(false)}>
               No (Keep Spot)
             </button>
         </div>

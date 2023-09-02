@@ -12,6 +12,7 @@ import SpotDetails from "./components/Spots/SpotDetails";
 import CreateSpot from "./components/Spots/CreateSpot";
 import CreateReviewModal from "./components/Reviews/CreateReview";
 import UpdateSpot from "./components/Spots/UpdateSpot";
+import ManageSpot from "./components/Spots/ManageSpot";
 
 
 function App() {
@@ -26,11 +27,14 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-            <Route path='/spots/:spotId/reviews'>
-              <CreateReviewModal/>
+            <Route path='/user/:userId/spots'>
+              <ManageSpot/>
             </Route>
             <Route path='/spots/:spotId/update'>
               <UpdateSpot/>
+            </Route>
+            <Route path='/spots/:spotId/reviews'>
+              <CreateReviewModal/>
             </Route>
             <Route path='/spots/new'>
               <CreateSpot/>
