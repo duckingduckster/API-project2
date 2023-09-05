@@ -41,7 +41,7 @@ module.exports = {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      stars: { [Op.in]: [4, 3, 5] }
+      spotId: { [Op.in]: [1, 2, 3, 4] }
     }, {});
   }
 };
