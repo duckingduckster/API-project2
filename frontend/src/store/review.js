@@ -27,7 +27,6 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
 
     if(response.ok){
         const review = await response.json()
-        console.log('this is review thunbk',review.Reviews)
         dispatch(spotReviews(spotId, review.Reviews))
     }else {
         console.error('Failed to get review')

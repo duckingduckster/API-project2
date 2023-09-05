@@ -11,7 +11,6 @@ const SpotDetails = () => {
     const { spotId } = useParams()
     const spotDetail = useSelector(state => state.spots.spotDetail)
     const reviews = useSelector((state) => Object.values(state.reviews.reviews) || [])
-    // const spot = useSelector(state => state.spots.spots)
     const user = useSelector((state) => state.session.user)
     const [showModal, setShowModal] = useState(false);
     const openModal = () => setShowModal(true);
@@ -33,9 +32,14 @@ const SpotDetails = () => {
     const additionalImages = spotDetail?.SpotImages?.filter(image => !image.preview).slice(0, 4)
 
     const calculateReviewInfo = (reviews) => {
-        if (!reviews) return { avgRating: 'New', count: 0 };
+        if (!reviews || reviews.length === 0) return { avgRating: 'New', count: 0 };
 
-        const totalRating = reviews?.reduce((acc, review) => acc + review.stars, 0);
+        let totalRating = 0;
+
+        reviews.forEach(review => {
+            totalRating += (review.stars || 0);
+        });
+
         const avgRating = (totalRating / reviews.length).toFixed(2);
 
         return { avgRating, count: reviews.length };

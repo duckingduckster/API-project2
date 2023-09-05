@@ -81,7 +81,6 @@ const CreateSpot = () => {
             }
         })
         setFormData({ ...formData, errors });
-        console.log("Validation errors", errors)
         return Object.keys(errors).length === 0;
     };
 
@@ -90,7 +89,6 @@ const CreateSpot = () => {
 
         if (validateForm()) {
             setFormData({ ...formData, validSubmit: true })
-            console.log("Submitting form", formData)
             const spotDetails = {
             address,
             city,

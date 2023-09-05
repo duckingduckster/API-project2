@@ -7,3 +7,60 @@
     display: block;
     /* other styles */
   }
+
+.spot-detail-container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+.review-container {
+  margin-top: 20px;
+}
+
+.single-review {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.image-gallery {
+  display: flex;
+  gap: 15px;
+}
+
+.main-spot-img img {
+  width: 70%;
+  border-radius: 5px;
+}
+
+.additional-images img {
+  width: 23%;
+  border-radius: 5px;
+}
+
+.callout-box {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.fas.fa-star {
+  margin-right: 5px;
+  color: gold;
+}
+
+.callout-box > div span {
+  margin: 0 5px;
+}

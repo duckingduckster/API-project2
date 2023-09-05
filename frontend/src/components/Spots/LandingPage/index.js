@@ -7,7 +7,6 @@ import './LandingPage.css'
 function SpotList () {
     const dispatch = useDispatch()
     const spots = useSelector((state) => state.spots.spots)
-    console.log(spots)
     const history = useHistory()
 
     useEffect(() =>{

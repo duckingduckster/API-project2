@@ -165,7 +165,6 @@ export const getUserSpots = () => async (dispatch) => {
     if(response.ok){
 
         const spots = await response.json()
-        console.log('thunk spots', spots.Spots)
         dispatch(userSpots(spots.Spots))
     }
 }

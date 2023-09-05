@@ -11,7 +11,6 @@ const ManageSpot = () => {
     const userSpots = useSelector((state) => state.spots.userSpots)
 
     const spotsArray = userSpots ? Object.values(userSpots) : []
-    console.log('this is spotarray',spotsArray)
 
     const [deleteSpotModal, setDeleteSpotModal] = useState(false)
     const [spotToDelete, setSpotToDelete] = useState('')
@@ -42,29 +41,20 @@ const ManageSpot = () => {
                 <div className='owned-spots-list'>
                     {spotsArray?.map(spot => (
                         <div className='manage-spots-list' key={spot.id} onClick={() => history.push(`/spots/${spot.id}`)}>
-
-                            {/* Display Image */}
                             <div className='preview-img'>
                                 <img className='owned-spot-img' src={spot.previewImage || null} alt={`${spot.name}`}/>
                             </div>
-
-                            {/* Display Location and Rating */}
                             <div className='owned-spot-info'>
                                 <p className='owned-spot-location'>
                                     {`${spot.city}, ${spot.state}`}
                                 </p>
                                 <p className='owned-spot-reviews'>
-                                    {/* Assuming you have a logic to compute the avgRating */}
                                     <span className='stars'>★{ spot.avgRating || 'New' }</span>
                                 </p>
                             </div>
-
-                            {/* Display Price */}
                             <div className='owned-spot-price'>
                                 <span className='spot-price'>${spot.price}</span> night
                             </div>
-
-                            {/* Update and Delete Buttons */}
                             <div className='owned-spot-buttons'>
                                 <button onClick={(e) => {
                                     e.stopPropagation();
@@ -83,8 +73,6 @@ const ManageSpot = () => {
                     ))}
                 </div>
             )}
-
-            {/* Delete Modal */}
             <DeleteSpotModal
                 spotId={spotToDelete}
                 isOpen={deleteSpotModal}
