@@ -1,8 +1,10 @@
 .landing-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-
 }
 
 
@@ -10,7 +12,11 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
-
+    width: 30%;
+    margin-bottom: 2%;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
 }
 
 
@@ -25,7 +31,7 @@
     position: absolute;
     bottom: 100%;
     left: 50%;
-
+    transform: translateX(-50%);
 
     opacity: 0;
     transition: opacity 0.3s;
@@ -35,3 +41,5 @@
     visibility: visible;
     opacity: 1;
 }
+
+
