@@ -76,6 +76,11 @@ const ManageSpot = () => {
             <DeleteSpotModal
                 spotId={spotToDelete}
                 isOpen={deleteSpotModal}
+                onClose={() => setDeleteSpotModal(false)}
+                onDelete={() => {
+                    setDeleteSpotModal(false)
+                    dispatch(getUserSpots())
+                }}
             />
         </div>
     );

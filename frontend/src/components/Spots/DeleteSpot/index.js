@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { deleteSpotT } from "../../../store/spots"
+import './deletespot.css'
 
 const DeleteSpotModal = ({ spotId, isOpen, onClose, onDelete }) =>{
     const dispatch = useDispatch()
     const modalRef = useRef()
-    const [openModal, setOpenModal] = useState(true)
+    const [openModal, setOpenModal] = useState(isOpen)
 
     const handleDelete = async () => {
       const deletedSpot = await dispatch(deleteSpotT(spotId))
@@ -20,15 +21,10 @@ const DeleteSpotModal = ({ spotId, isOpen, onClose, onDelete }) =>{
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-          setOpenModal(false);
+          onClose()
         }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+      }
+      })
 
     return (
         <div className={`delete-spot-container ${openModal ? "activeOverlay" : ""}`}>
