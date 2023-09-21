@@ -8,23 +8,30 @@ const DeleteSpotModal = ({ spotId, isOpen, onClose, onDelete }) =>{
     const modalRef = useRef()
     const [openModal, setOpenModal] = useState(isOpen)
 
-    const handleDelete = async () => {
-      const deletedSpot = await dispatch(deleteSpotT(spotId))
+    useEffect(() => {
+      setOpenModal(isOpen)
+    }, [isOpen])
 
-      // if (deletedSpot) {
-      //     setOpenModal(false);
-      //     window.location.reload();
-      // }
-  }
+    const handleDelete = async () => {
+      const deletedSpot = await dispatch(deleteSpotT(spotId));
+      if (deletedSpot) {
+          onDelete()
+      }
+    }
 
 
     useEffect(() => {
       const handleClickOutside = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-          onClose()
-        }
+          if (modalRef.current && !modalRef.current.contains(event.target)) {
+              onClose()
+          }
       }
-      })
+
+      document.addEventListener("mousedown", handleClickOutside)
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside)
+      }
+  }, [onClose])
 
     return (
         <div className={`delete-spot-container ${openModal ? "activeOverlay" : ""}`}>
