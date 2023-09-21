@@ -33,10 +33,10 @@ const ManageSpot = () => {
         <div className='manage-spots-container'>
             <h1 className='manage-spots-title'>Manage Spots</h1>
 
-            {spotsArray[0]?.length === 0 ? (
-                <div className='new-spot-link'>
-                    <Link to={`/spots/new`} className='new-spot-button'>Create a New Spot</Link>
-                </div>
+            {spotsArray.length === 0 ? (
+            <div className='new-spot-link'>
+                <Link to={`/spots/new`} className='new-spot-button'>Create a New Spot</Link>
+            </div>
             ) : (
                 <div className='owned-spots-list'>
                     {spotsArray?.map(spot => (

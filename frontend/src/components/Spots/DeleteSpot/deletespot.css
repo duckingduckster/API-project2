@@ -1,0 +1,7 @@
+.delete-spot-container {
+    display: none;
+}
+
+.delete-spot-container.activeOverlay {
+    display: block;
+}
