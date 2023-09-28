@@ -22,6 +22,13 @@ const addReviews = (spotId, review) => {
     }
 }
 
+const deleteReview = (review) => {
+    return {
+        type: DELETE_REVIEW,
+        review
+    }
+}
+
 export const getSpotReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
@@ -49,6 +56,17 @@ export const addingReview = (spotId, review) => async (dispatch) => {
     }
 }
 
+export const deletingReview = (reviewId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'DELETE'
+    })
+    if(response.ok){
+        const deletedReview = await response.json()
+        dispatch(deleteReview(deletedReview))
+        return deletedReview
+    }
+}
+
 const initialState = { reviews: {} }
 
 const reviewReducer = (state = initialState, action) => {
@@ -68,7 +86,24 @@ const reviewReducer = (state = initialState, action) => {
                     ...state.reviews,
                     [action.spotId]: [action.review, ...(state.reviews[action.spotId] || [])],
                 }
-            };
+            }
+        // case DELETE_REVIEW:
+        //     newState.reviews = newState.reviews.filter(review => review.id !== action.review.id)
+        //     return newState
+        case DELETE_REVIEW:
+  // Find the spotId of the review to delete
+  const spotIdToDelete = Object.keys(state.reviews).find(spotId =>
+    state.reviews[spotId].some(review => review.id === action.review.id)
+  );
+
+  return {
+    ...state,
+    reviews: {
+      ...state.reviews,
+      // Filter out the review with the given id from the reviews of the spot with spotIdToDelete
+      [spotIdToDelete]: state.reviews[spotIdToDelete].filter(review => review.id !== action.review.id),
+    }
+  }
         default:
             return state;
     }

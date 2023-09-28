@@ -31,7 +31,7 @@ const DeleteSpotModal = ({ spotId, isOpen, onClose, onDelete }) =>{
       return () => {
           document.removeEventListener("mousedown", handleClickOutside)
       }
-  }, [onClose])
+    }, [onClose])
 
     return (
         <div className={`delete-spot-container ${openModal ? "activeOverlay" : ""}`}>

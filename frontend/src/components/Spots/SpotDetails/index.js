@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { getSpotDetails } from "../../../store/spots"
 import { getSpotReviews } from "../../../store/review"
 import CreateReviewModal from "../../Reviews/CreateReview"
+import DeleteReview from "../../Reviews/DeleteReview"
 import './SpotDetails.css'
 
 const SpotDetails = () => {
@@ -15,6 +16,9 @@ const SpotDetails = () => {
     const [showModal, setShowModal] = useState(false)
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const openDeleteModal = () => setShowDeleteModal(true)
+    const closeDeleteModal = () => setShowDeleteModal(false)
 
     useEffect(() =>{
         dispatch(getSpotReviews(spotId))
@@ -97,7 +101,7 @@ const SpotDetails = () => {
                                     isOpen={showModal}
                                     />
                                     </div>}
-                            {sortedReviews && sortedReviews.length > 0 ? (
+                            {sortedReviews && sortedReviews[0]?.length > 0 ? (
                             sortedReviews[0]?.map(review => (
                                     <div key={review.id} className="single-review">
                                         <div className="review-meta">
@@ -105,6 +109,20 @@ const SpotDetails = () => {
                                             <span>{new Date(review.createdAt).toLocaleDateString('default', { month: 'long', year: 'numeric' })}</span>
                                         </div>
                                         <p>{review.review}</p>
+                                        <div className="delete-review-modal">
+                                        {(user && user.id === review.userId) && (
+                                        <>
+                                        <button onClick={openDeleteModal}>Delete Review</button>
+                                        {showDeleteModal && (
+                                            <DeleteReview
+                                            reviewId={review.id}
+                                            isOpen={showDeleteModal}
+                                            onClose={closeDeleteModal}
+                                            />
+                                        )}
+                                        </>
+                                    )}
+                                    </div>
                                     </div>
                                 ))
                             ) : (
