@@ -87,23 +87,23 @@ const reviewReducer = (state = initialState, action) => {
                     [action.spotId]: [action.review, ...(state.reviews[action.spotId] || [])],
                 }
             }
-        // case DELETE_REVIEW:
-        //     newState.reviews = newState.reviews.filter(review => review.id !== action.review.id)
-        //     return newState
-        case DELETE_REVIEW:
-  // Find the spotId of the review to delete
-  const spotIdToDelete = Object.keys(state.reviews).find(spotId =>
-    state.reviews[spotId].some(review => review.id === action.review.id)
-  );
 
-  return {
-    ...state,
-    reviews: {
-      ...state.reviews,
-      // Filter out the review with the given id from the reviews of the spot with spotIdToDelete
-      [spotIdToDelete]: state.reviews[spotIdToDelete].filter(review => review.id !== action.review.id),
-    }
-  }
+        case DELETE_REVIEW:
+        const spotIdToDelete = Object.keys(state.reviews).find(spotId =>
+        state.reviews[spotId].some(review => review.id === action.review.id)
+        )
+
+        if (spotIdToDelete && state.reviews[spotIdToDelete]) {
+        return {
+            ...state,
+            reviews: {
+                ...state.reviews,
+                [spotIdToDelete]: state.reviews[spotIdToDelete].filter(review => review.id !== action.review.id),
+            }
+        }
+        } else {
+        return state;
+        }
         default:
             return state;
     }
