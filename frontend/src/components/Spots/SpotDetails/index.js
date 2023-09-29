@@ -2,7 +2,7 @@ import React, { useEffect,useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getSpotDetails } from "../../../store/spots"
-import { getSpotReviews } from "../../../store/review"
+import { getSpotReviews, clearReviews } from "../../../store/review"
 import CreateReviewModal from "../../Reviews/CreateReview"
 import DeleteReview from "../../Reviews/DeleteReview"
 import './SpotDetails.css'
@@ -20,13 +20,22 @@ const SpotDetails = () => {
     const openDeleteModal = () => setShowDeleteModal(true)
     const closeDeleteModal = () => setShowDeleteModal(false)
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() =>{
-        dispatch(getSpotReviews(spotId))
+        dispatch(getSpotReviews(spotId)).then(() => setLoading(false))
     }, [dispatch, spotId])
+
 
     useEffect(() =>{
         dispatch(getSpotDetails(spotId))
     }, [dispatch, spotId])
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearReviews())
+        }
+    }, [dispatch])
 
     const handleReserveClick = () => {
         alert("Feature coming soon");
@@ -53,6 +62,9 @@ const SpotDetails = () => {
     const { avgRating, count } = calculateReviewInfo(reviews)
 
     const sortedReviews = reviews ? [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : []
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return spotDetail && (
         <div className="spot-detail-container">

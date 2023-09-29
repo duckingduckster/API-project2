@@ -4,7 +4,7 @@ const GET_REVIEWS = 'reviews/GET_REVIEWS'
 const ADD_REVIEWS = 'reviews/ADD_REVIEWS'
 const UPDATE_REVIEW = 'reviews/UPDATE_REVIEWS'
 const DELETE_REVIEW = 'reviews/DELETE_REVIEWS'
-
+const CLEAR_REVIEWS = 'reviews/CLEAR_REVIEWS'
 
 const spotReviews = (spotId, reviews) => {
     return{
@@ -29,14 +29,22 @@ const deleteReview = (review) => {
     }
 }
 
+export const clearReviews = () => {
+    return {
+        type: CLEAR_REVIEWS
+    }
+}
+
 export const getSpotReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
     if(response.ok){
         const review = await response.json()
         dispatch(spotReviews(spotId, review.Reviews))
+        return review
     }else {
         console.error('Failed to get review')
+        return Promise.reject()
     }
 }
 
@@ -66,6 +74,7 @@ export const deletingReview = (reviewId) => async (dispatch) => {
         return deletedReview
     }
 }
+
 
 const initialState = { reviews: {} }
 
@@ -102,10 +111,15 @@ const reviewReducer = (state = initialState, action) => {
             }
         }
         } else {
-        return state;
+        return state
         }
+        case CLEAR_REVIEWS:
+            return {
+                ...state,
+                reviews: {}
+            }
         default:
-            return state;
+            return state
     }
 }
 
