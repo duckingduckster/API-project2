@@ -1,4 +1,4 @@
-.modal-overlay {
+.review-modal-container {
     display: none;
     place-items: center;
     justify-content: center;
@@ -12,7 +12,7 @@
     z-index: 1000;
 }
 
-.deleteModal {
+.review-modal {
     width: 60%;
     max-width: 500px;
     background: #fff;
@@ -21,7 +21,6 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.modal-overlay.activeOverlay {
+.review-modal-container.is-active {
     display: flex;
 }
-

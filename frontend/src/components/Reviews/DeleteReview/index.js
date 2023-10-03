@@ -1,6 +1,7 @@
 import React, {useRef, useState, useEffect} from "react"
 import { useDispatch } from "react-redux"
 import { deletingReview } from "../../../store/review"
+import './deletereview.css'
 
 function DeleteReview ({isOpen, onClose, reviewId, onDelete}) {
     const dispatch = useDispatch()
