@@ -3,6 +3,7 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
+    min-height: 100vh;
 }
 
 .create-spot-container {
@@ -10,9 +11,10 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     box-sizing: border-box;
     padding: 20px;
+    overflow: auto;
+    min-height: 100vh;
 }
 
 .create-spot-form {
@@ -44,5 +46,5 @@ body, html {
 }
 
 .create-spot-btn:hover {
-    background-color: darkblue; 
+    background-color: darkblue;
 }
