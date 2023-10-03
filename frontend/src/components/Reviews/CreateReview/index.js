@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addingReview } from "../../../store/review";
+import './createreview.css'
 
 function CreateReviewModal({ spotId, isOpen, closeModal, showModal, onReviewPosted}){
     const dispatch = useDispatch()
@@ -44,7 +45,7 @@ function CreateReviewModal({ spotId, isOpen, closeModal, showModal, onReviewPost
         dispatch(addingReview(spotId, reviewDetails))
           .then(() => {
             closeModal();
-            
+
             if (onReviewPosted) {
               onReviewPosted();
             }

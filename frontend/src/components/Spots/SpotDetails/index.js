@@ -2,8 +2,9 @@ import React, { useEffect,useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getSpotDetails } from "../../../store/spots"
-import { getSpotReviews } from "../../../store/review"
+import { getSpotReviews, clearReviews } from "../../../store/review"
 import CreateReviewModal from "../../Reviews/CreateReview"
+import DeleteReview from "../../Reviews/DeleteReview"
 import './SpotDetails.css'
 
 const SpotDetails = () => {
@@ -15,14 +16,26 @@ const SpotDetails = () => {
     const [showModal, setShowModal] = useState(false)
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const openDeleteModal = () => setShowDeleteModal(true)
+    const closeDeleteModal = () => setShowDeleteModal(false)
+
+    const [loading, setLoading] = useState(true)
 
     useEffect(() =>{
-        dispatch(getSpotReviews(spotId))
+        dispatch(getSpotReviews(spotId)).then(() => setLoading(false))
     }, [dispatch, spotId])
+
 
     useEffect(() =>{
         dispatch(getSpotDetails(spotId))
     }, [dispatch, spotId])
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearReviews())
+        }
+    }, [dispatch])
 
     const handleReserveClick = () => {
         alert("Feature coming soon");
@@ -49,6 +62,9 @@ const SpotDetails = () => {
     const { avgRating, count } = calculateReviewInfo(reviews)
 
     const sortedReviews = reviews ? [...reviews].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) : []
+    if (loading) {
+        return <div>Loading...</div>
+    }
 
     return spotDetail && (
         <div className="spot-detail-container">
@@ -97,7 +113,7 @@ const SpotDetails = () => {
                                     isOpen={showModal}
                                     />
                                     </div>}
-                            {sortedReviews && sortedReviews.length > 0 ? (
+                            {sortedReviews && sortedReviews[0]?.length > 0 ? (
                             sortedReviews[0]?.map(review => (
                                     <div key={review.id} className="single-review">
                                         <div className="review-meta">
@@ -105,6 +121,20 @@ const SpotDetails = () => {
                                             <span>{new Date(review.createdAt).toLocaleDateString('default', { month: 'long', year: 'numeric' })}</span>
                                         </div>
                                         <p>{review.review}</p>
+                                        <div className="delete-review-modal">
+                                        {(user && user.id === review.userId) && (
+                                        <>
+                                        <button onClick={openDeleteModal}>Delete Review</button>
+                                        {showDeleteModal && (
+                                            <DeleteReview
+                                            reviewId={review.id}
+                                            isOpen={showDeleteModal}
+                                            onClose={closeDeleteModal}
+                                            />
+                                        )}
+                                        </>
+                                    )}
+                                    </div>
                                     </div>
                                 ))
                             ) : (

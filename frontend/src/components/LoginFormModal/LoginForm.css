@@ -22,6 +22,7 @@
 
   .Login-form input[type="text"],
   .Login-form input[type="password"] {
+    box-sizing: border-box;
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
